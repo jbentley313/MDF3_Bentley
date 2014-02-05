@@ -8,12 +8,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
 
 public class MainActivity extends Activity {
 static String Tag = "MainActivity";
-WebView myWebView;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,7 +21,6 @@ WebView myWebView;
 		
 		setContentView(R.layout.activity_main);
 		
-		myWebView = (WebView) findViewById(R.id.webView);
 		
 		
 		 // Get the intent that started this activity
@@ -35,10 +31,7 @@ WebView myWebView;
 	    	Log.i(Tag, "NO DATA");
 	    } else {
 	    	Log.i(Tag, "THERE IS DAZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-	    	Log.i("the effin thing is", data.getHost());
-	    	
-	    	String urlString = ("http://" + data.getHost());
-	    	myWebView.loadUrl(urlString);
+	    	Log.i(Tag, data.getSchemeSpecificPart());
 	    }
 	 
 	    
