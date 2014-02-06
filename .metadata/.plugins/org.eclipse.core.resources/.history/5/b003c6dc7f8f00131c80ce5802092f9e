@@ -68,7 +68,6 @@ import android.widget.Toast;
 		goBtn.setOnClickListener(this);
 		urlEditText = (EditText) findViewById(R.id.urlEditText);
 		urlEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-		urlEditText.setOnClickListener(this);
 		
 		fontSize = myWebView.getSettings().getDefaultFontSize();
 
@@ -144,7 +143,10 @@ import android.widget.Toast;
 			return true;
 		}
 
-		
+		if (!myWebView.canGoBack()) {
+
+			return true;
+		}
 
 		// not back button, default system behavior
 		return super.onKeyDown(keyCode, event);
@@ -179,11 +181,6 @@ import android.widget.Toast;
 			String passedUrlStringFromEdittext = urlEditText.getText().toString();
 			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
 			loadUrl(loadThisUrl);
-			
-			break;
-			
-		case R.id.urlEditText:
-			urlEditText.setText("");
 		}
 
 
@@ -204,8 +201,6 @@ import android.widget.Toast;
 		public void onPageFinished(WebView view, String url) {
 
 			findViewById(R.id.progressBar).setVisibility(View.GONE);
-			String currentUrlString = myWebView.getUrl();
-			urlEditText.setText(currentUrlString);
 		}
 	}
 	

@@ -144,7 +144,10 @@ import android.widget.Toast;
 			return true;
 		}
 
-		
+		if (!myWebView.canGoBack()) {
+
+			return true;
+		}
 
 		// not back button, default system behavior
 		return super.onKeyDown(keyCode, event);
