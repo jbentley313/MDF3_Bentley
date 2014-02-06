@@ -6,5 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="loading_please_wait_">Loading...Please wait...</string>
     <string name="email_this_">Email this!</string>
+    <string name="take_screenshot">Take screenshot!</string>
+    <string name="go_">Go!</string>
+    <string name="enter_url">Enter Url</string>
 
 </resources>

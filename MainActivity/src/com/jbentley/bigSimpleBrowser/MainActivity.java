@@ -21,7 +21,6 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -31,6 +30,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -42,7 +42,9 @@ import android.widget.Toast;
 	int fontSize;
 	String urlString;
 	Button emailBtn;
+	Button goBtn;
 	ProgressBar progressBar;
+	EditText urlEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +59,26 @@ import android.widget.Toast;
 		setContentView(R.layout.activity_main);
 
 		myWebView = (WebView) findViewById(R.id.webView);
-		myWebView.setOnClickListener(this);
+
 		emailBtn = (Button) findViewById(R.id.emailBtn);
 		emailBtn.setOnClickListener(this);
-
+		goBtn = (Button) findViewById(R.id.goBtn);
+		goBtn.setOnClickListener(this);
+		urlEditText = (EditText) findViewById(R.id.urlEditText);
+		
 		fontSize = myWebView.getSettings().getDefaultFontSize();
 
 		// Get the intent that started this activity
 		Intent callingIntent = getIntent();
 		Uri data = callingIntent.getData();
 
-
+		//set default webpage if launched from icon
 		if (data==null) {
 
 			urlString = "http://www.google.com";
+
 		} else {
+			//if data, get path 
 			String encodedPath = data.getEncodedPath();
 			Log.i("MainActivitiy encodedPath", encodedPath);
 
@@ -81,18 +88,17 @@ import android.widget.Toast;
 
 			urlString = ("http://" + data.getHost() + encodedPath);
 		}
+
 		connectivityClass connectionChecker = new connectivityClass();
 
 		//check for network connection
 		if(connectionChecker.connectionStatus(mContext)) {
 
-
 			WebSettings myWebSettings = myWebView.getSettings();
 
 			myWebSettings.setJavaScriptEnabled(true);
 
-			Log.i("MainAct full string", urlString);
-			myWebView.loadUrl(urlString);
+			loadUrl(urlString);
 
 			//allow links to be clickable within the webview
 			myWebView.setWebViewClient(new myWebViewClient());
@@ -152,27 +158,32 @@ import android.widget.Toast;
 		switch (v.getId()) {
 		case R.id.emailBtn:
 			String currentTitle = myWebView.getTitle();
-
+			String currentUrlString = myWebView.getUrl();
 			// TODO Auto-generated method stub
 			Log.i(Tag, "email button");
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("message/rfc822");
 			i.putExtra(Intent.EXTRA_EMAIL, new String[]{""});
 			i.putExtra(Intent.EXTRA_SUBJECT, currentTitle);
-			i.putExtra(Intent.EXTRA_TEXT, urlString);
+			i.putExtra(Intent.EXTRA_TEXT, currentUrlString);
 			try {
 				startActivity(Intent.createChooser(i, "Email this web page..."));
 			} catch (android.content.ActivityNotFoundException ex) {
 				Toast.makeText(this, "No email clients are installed.", Toast.LENGTH_LONG).show();
 			}
-			
+
 			break;
+
+		case R.id.goBtn:
+			String passedUrlStringFromEdittext = urlEditText.getText().toString();
+			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
+			loadUrl(loadThisUrl);
 		}
 
 
 	}
-	
-	
+
+
 	//progress bar
 	private class myWebViewClient extends WebViewClient {
 
@@ -190,6 +201,11 @@ import android.widget.Toast;
 		}
 	}
 
+	public void loadUrl(String passedUrlString) {
+		Log.i(Tag, "Take Screenshot screenshot clicked!");
+		Log.i("MainAct full string", urlString);
+		myWebView.loadUrl(passedUrlString);
+	}
 
 
 

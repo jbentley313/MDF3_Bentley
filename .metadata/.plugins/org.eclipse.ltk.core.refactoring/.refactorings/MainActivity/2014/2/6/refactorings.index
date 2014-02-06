@@ -10,3 +10,6 @@
 1391653922419	Extracts string 'Loading...Please wait...' into R.string.loading_please_wait_
 1391661627436	Extracts string 'Email this!' into R.string.email_this_
 1391667662927	Rename package 'com.jbentley.week1'
+1391721031266	Extracts string 'take screenshot' into R.string.take_screenshot
+1391722796194	Extracts string 'Go!' into R.string.go_
+1391723036815	Extracts string 'Enter Url' into R.string.enter_url

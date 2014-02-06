@@ -9,12 +9,8 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.webkit.WebView"/>
 <fullyQualifiedTypeName name="android.net.ConnectivityManager"/>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
-<fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
 <fullyQualifiedTypeName name="android.view.KeyEvent"/>
-<fullyQualifiedTypeName name="android.view.GestureDetector"/>
-<fullyQualifiedTypeName name="android.view.GestureDetector.OnGestureListener"/>
 <fullyQualifiedTypeName name="android.gesture.Gesture"/>
 <fullyQualifiedTypeName name="android.webkit.WebSettings"/>
 <fullyQualifiedTypeName name="com.jbentley.week1.MainActivity.WebAppInterface"/>
@@ -23,4 +19,14 @@
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.jbentley.week1.R.id"/>
+<fullyQualifiedTypeName name="android.widget.ProgressBar"/>
+<fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
+<fullyQualifiedTypeName name="javax.security.auth.callback.Callback"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="android.view.GestureDetector.OnGestureListener"/>
+<fullyQualifiedTypeName name="android.view.GestureDetector"/>
 </qualifiedTypeNameHistroy>
