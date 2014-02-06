@@ -2,24 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
-     >
+    tools:context=".MainActivity" >
 
-    
-    
-    <Button 
+    <Button
+        android:id="@+id/emailBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/email_this_"
-        android:id="@+id/emailBtn"
-       
-        />
+        style="@style/emailButtonStyle" />
     
-    <WebView 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ProgressBar
+       android:layout_height="20dp"
+       android:layout_width="wrap_content"
+       android:layout_gravity="center"
+       android:id="@+id/progressBar"/>
+    
+    <WebView
         android:id="@+id/webView"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+    
 
 </LinearLayout>
