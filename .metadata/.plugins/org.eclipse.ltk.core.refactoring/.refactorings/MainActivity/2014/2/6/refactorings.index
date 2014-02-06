@@ -7,3 +7,5 @@
 1391571961707	Move file
 1391572014405	Delete element
 1391572064467	Delete elements
+1391653922419	Extracts string 'Loading...Please wait...' into R.string.loading_please_wait_
+1391661627436	Extracts string 'Email this!' into R.string.email_this_
