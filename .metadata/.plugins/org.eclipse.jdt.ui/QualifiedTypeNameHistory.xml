@@ -14,4 +14,5 @@
 <fullyQualifiedTypeName name="android.net.ConnectivityManager"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
+<fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
 </qualifiedTypeNameHistroy>

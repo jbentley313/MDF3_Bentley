@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 	    }
 	}
 	
-	//Back button to go back in web history 
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    // if back key pressed and there is a history -go back
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
 	        return true;
 	    }
 	    
-	    // not back button, default system behavior
+	    // no back button
 	    return super.onKeyDown(keyCode, event);
 	}
 	
