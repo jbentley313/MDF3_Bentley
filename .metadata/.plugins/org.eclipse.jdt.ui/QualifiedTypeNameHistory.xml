@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.view.Window"/>
 <fullyQualifiedTypeName name="android.view.WindowManager"/>
-<fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.net.Uri"/>
 <fullyQualifiedTypeName name="com.example.webintentlauncher.R.id"/>
@@ -10,23 +9,30 @@
 <fullyQualifiedTypeName name="android.webkit.WebView"/>
 <fullyQualifiedTypeName name="android.net.ConnectivityManager"/>
 <fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
-<fullyQualifiedTypeName name="android.view.KeyEvent"/>
 <fullyQualifiedTypeName name="android.gesture.Gesture"/>
 <fullyQualifiedTypeName name="android.webkit.WebSettings"/>
 <fullyQualifiedTypeName name="com.jbentley.week1.MainActivity.WebAppInterface"/>
 <fullyQualifiedTypeName name="android.webkit.WebSettings.TextSize"/>
 <fullyQualifiedTypeName name="android.webkit.JavascriptInterface"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
-<fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.jbentley.week1.R.id"/>
 <fullyQualifiedTypeName name="android.widget.ProgressBar"/>
 <fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
 <fullyQualifiedTypeName name="javax.security.auth.callback.Callback"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
-<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
-<fullyQualifiedTypeName name="android.view.GestureDetector.OnGestureListener"/>
 <fullyQualifiedTypeName name="android.view.GestureDetector"/>
+<fullyQualifiedTypeName name="android.widget.TabHost.OnTabChangeListener"/>
+<fullyQualifiedTypeName name="android.view.GestureDetector.OnGestureListener"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="android.widget.EditText"/>
+<fullyQualifiedTypeName name="android.view.inputmethod.InputMethodManager"/>
+<fullyQualifiedTypeName name="android.text.InputType"/>
+<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
+<fullyQualifiedTypeName name="android.view.KeyEvent"/>
+<fullyQualifiedTypeName name="android.content.DialogInterface.OnKeyListener"/>
+<fullyQualifiedTypeName name="android.view.View.OnKeyListener"/>
 </qualifiedTypeNameHistroy>

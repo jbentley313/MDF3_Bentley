@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -34,6 +35,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 
@@ -62,6 +65,9 @@ import android.widget.Toast;
 
 		myWebView = (WebView) findViewById(R.id.webView);
 
+		//set webview to zoomable
+		myWebView.getSettings().setBuiltInZoomControls(true);
+
 		emailBtn = (Button) findViewById(R.id.emailBtn);
 		emailBtn.setOnClickListener(this);
 		goBtn = (Button) findViewById(R.id.goBtn);
@@ -69,7 +75,8 @@ import android.widget.Toast;
 		urlEditText = (EditText) findViewById(R.id.urlEditText);
 		urlEditText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 		urlEditText.setOnClickListener(this);
-		
+
+
 		fontSize = myWebView.getSettings().getDefaultFontSize();
 
 		// Get the intent that started this activity
@@ -110,6 +117,28 @@ import android.widget.Toast;
 		} else {
 			Toast.makeText(mContext, "Please check your network connection", Toast.LENGTH_LONG).show();
 		}
+
+
+		//keyboard 'done' button handler
+		urlEditText.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+					Log.i(Tag,"Done btn pressed");
+					String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
+					String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
+					if(passedUrlStringFromEdittext.isEmpty()) {
+						Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
+					} else  {
+						loadUrl(loadThisUrl);
+						Log.i("string", passedUrlStringFromEdittext);
+					}
+				}    
+				return false;
+			}
+		});
+
+
 	}
 
 	@Override
@@ -142,9 +171,7 @@ import android.widget.Toast;
 		if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
 			myWebView.goBack();
 			return true;
-		}
-
-		
+		}  
 
 		// not back button, default system behavior
 		return super.onKeyDown(keyCode, event);
@@ -152,7 +179,7 @@ import android.widget.Toast;
 
 
 
-	//email button onClick and button visibility
+	//email button and go button onClick 
 	@Override
 	public void onClick(View v) {
 
@@ -166,7 +193,7 @@ import android.widget.Toast;
 			i.setType("message/rfc822");
 			i.putExtra(Intent.EXTRA_EMAIL, new String[]{""});
 			i.putExtra(Intent.EXTRA_SUBJECT, currentTitle);
-			i.putExtra(Intent.EXTRA_TEXT, currentUrlString);
+			i.putExtra(Intent.EXTRA_TEXT, (currentUrlString  + "   --Sent with Big Simple Browser"));
 			try {
 				startActivity(Intent.createChooser(i, "Email this web page..."));
 			} catch (android.content.ActivityNotFoundException ex) {
@@ -176,12 +203,18 @@ import android.widget.Toast;
 			break;
 
 		case R.id.goBtn:
-			String passedUrlStringFromEdittext = urlEditText.getText().toString();
+			String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
 			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
-			loadUrl(loadThisUrl);
-			
+			if(passedUrlStringFromEdittext.isEmpty()) {
+				Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
+			} else  {
+				loadUrl(loadThisUrl);
+				Log.i("string", passedUrlStringFromEdittext);
+			}
+
+
 			break;
-			
+
 		case R.id.urlEditText:
 			urlEditText.setText("");
 		}
@@ -206,21 +239,26 @@ import android.widget.Toast;
 			findViewById(R.id.progressBar).setVisibility(View.GONE);
 			String currentUrlString = myWebView.getUrl();
 			urlEditText.setText(currentUrlString);
+
+			//set webview to zoomable
+			myWebView.getSettings().setBuiltInZoomControls(true);
 		}
 	}
-	
+
 	//load url 
 	public void loadUrl(String passedUrlString) {
-		Log.i(Tag, "Take Screenshot screenshot clicked!");
+		Log.i(Tag, "loadURL");
 		Log.i("MainAct full string", urlString);
 		myWebView.loadUrl(passedUrlString);
-		
-		
+
+
 		//hide keyboard
-		InputMethodManager imm = (InputMethodManager)getSystemService(
+		InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(
 				Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
+		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
+
+
 
 
 
