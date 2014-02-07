@@ -219,7 +219,7 @@ import android.widget.Toast;
 				loadUrl(loadThisUrl);
 				Log.i("go button Main Act", passedUrlStringFromEdittext);
 			}
-
+		
 
 			break;
 

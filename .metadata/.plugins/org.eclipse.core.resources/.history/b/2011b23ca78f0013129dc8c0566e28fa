@@ -129,16 +129,10 @@ import android.widget.Toast;
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 					Log.i(Tag,"Done btn pressed");
-					String passedUrlStringFromEdittext = urlEditText.getText().toString()
-							.replace("http://", "")
-							.replace("https://", "");
+					
+					String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
 					String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
-					if(passedUrlStringFromEdittext.isEmpty()) {
-						Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
-					} else  {
-						loadUrl(loadThisUrl);
-						Log.i("go button Main Act", passedUrlStringFromEdittext);
-					}
+					loadUrl(loadThisUrl);
 				}    
 				return false;
 			}
@@ -209,9 +203,7 @@ import android.widget.Toast;
 			break;
 
 		case R.id.goBtn:
-			String passedUrlStringFromEdittext = urlEditText.getText().toString()
-			.replace("http://", "")
-			.replace("https://", "");
+			String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
 			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
 			if(passedUrlStringFromEdittext.isEmpty()) {
 				Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
@@ -219,7 +211,7 @@ import android.widget.Toast;
 				loadUrl(loadThisUrl);
 				Log.i("go button Main Act", passedUrlStringFromEdittext);
 			}
-
+		
 
 			break;
 

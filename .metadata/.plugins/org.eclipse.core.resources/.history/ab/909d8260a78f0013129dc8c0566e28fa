@@ -209,9 +209,7 @@ import android.widget.Toast;
 			break;
 
 		case R.id.goBtn:
-			String passedUrlStringFromEdittext = urlEditText.getText().toString()
-			.replace("http://", "")
-			.replace("https://", "");
+			String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
 			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
 			if(passedUrlStringFromEdittext.isEmpty()) {
 				Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
@@ -219,7 +217,7 @@ import android.widget.Toast;
 				loadUrl(loadThisUrl);
 				Log.i("go button Main Act", passedUrlStringFromEdittext);
 			}
-
+		
 
 			break;
 
