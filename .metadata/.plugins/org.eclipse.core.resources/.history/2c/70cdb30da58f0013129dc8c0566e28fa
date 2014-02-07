@@ -2,10 +2,6 @@
  *Big Simple Browser
  * 
  * Jason Bentley
- * 
- * 2/6/2014
- * 
- * 
  */
 
 package com.jbentley.bigSimpleBrowser;
@@ -257,5 +253,11 @@ import android.widget.Toast;
 				Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
+
+
+
+
+
+
 
 }

@@ -258,4 +258,10 @@ import android.widget.Toast;
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
 
+
+
+
+
+
+
 }

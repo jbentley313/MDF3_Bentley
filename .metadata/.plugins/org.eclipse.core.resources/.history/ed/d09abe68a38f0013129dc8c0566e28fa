@@ -2,10 +2,6 @@
  *Big Simple Browser
  * 
  * Jason Bentley
- * 
- * 2/6/2014
- * 
- * 
  */
 
 package com.jbentley.bigSimpleBrowser;
@@ -129,10 +125,14 @@ import android.widget.Toast;
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 					Log.i(Tag,"Done btn pressed");
-					
 					String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
 					String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
-					loadUrl(loadThisUrl);
+					if(passedUrlStringFromEdittext.isEmpty()) {
+						Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
+					} else  {
+						loadUrl(loadThisUrl);
+						Log.i("string", passedUrlStringFromEdittext);
+					}
 				}    
 				return false;
 			}
@@ -211,7 +211,7 @@ import android.widget.Toast;
 				loadUrl(loadThisUrl);
 				Log.i("string", passedUrlStringFromEdittext);
 			}
-		
+
 
 			break;
 
@@ -257,5 +257,11 @@ import android.widget.Toast;
 				Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
+
+
+
+
+
+
 
 }

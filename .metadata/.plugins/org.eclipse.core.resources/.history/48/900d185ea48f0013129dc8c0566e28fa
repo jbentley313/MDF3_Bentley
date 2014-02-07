@@ -2,10 +2,6 @@
  *Big Simple Browser
  * 
  * Jason Bentley
- * 
- * 2/6/2014
- * 
- * 
  */
 
 package com.jbentley.bigSimpleBrowser;
@@ -90,8 +86,8 @@ import android.widget.Toast;
 		//set default webpage if launched from icon
 		if (data==null) {
 
-			urlString = "http://www.google.com";
-
+			
+myWebView.loadUrl("http://www.google.com");
 		} else {
 			//if data, get path 
 			String encodedPath = data.getEncodedPath();
@@ -102,6 +98,7 @@ import android.widget.Toast;
 			Log.i(Tag, data.getHost());
 
 			urlString = ("http://" + data.getHost() + encodedPath);
+			myWebView.loadUrl(urlString);
 		}
 
 		connectivityClass connectionChecker = new connectivityClass();
@@ -113,7 +110,7 @@ import android.widget.Toast;
 
 			myWebSettings.setJavaScriptEnabled(true);
 
-			loadUrl(urlString);
+			loadUrl();
 
 			//allow links to be clickable within the webview
 			myWebView.setWebViewClient(new myWebViewClient());
@@ -129,10 +126,14 @@ import android.widget.Toast;
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 					Log.i(Tag,"Done btn pressed");
-					
-					String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
-					String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
-					loadUrl(loadThisUrl);
+//					String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
+//					String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
+//					if(passedUrlStringFromEdittext.isEmpty()) {
+//						Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
+//					} else  {
+						loadUrl();
+//						Log.i("string", passedUrlStringFromEdittext);
+//					}
 				}    
 				return false;
 			}
@@ -203,15 +204,15 @@ import android.widget.Toast;
 			break;
 
 		case R.id.goBtn:
-			String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
-			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
-			if(passedUrlStringFromEdittext.isEmpty()) {
-				Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
-			} else  {
-				loadUrl(loadThisUrl);
-				Log.i("string", passedUrlStringFromEdittext);
-			}
-		
+//			String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
+//			String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
+//			if(passedUrlStringFromEdittext.isEmpty()) {
+//				Toast.makeText(mContext, "No URL entered", Toast.LENGTH_LONG).show();
+//			} else  {
+				loadUrl();
+//				Log.i("string", passedUrlStringFromEdittext);
+//			}
+
 
 			break;
 
@@ -246,10 +247,20 @@ import android.widget.Toast;
 	}
 
 	//load url 
-	public void loadUrl(String passedUrlString) {
+	public void loadUrl() {
 		Log.i(Tag, "loadURL");
 		Log.i("MainAct full string", urlString);
-		myWebView.loadUrl(passedUrlString);
+		
+		String passedUrlStringFromEdittext = urlEditText.getText().toString().replace("http://", "").replace("https://", "");
+		String loadThisUrl = ("http://" + passedUrlStringFromEdittext);
+		if(passedUrlStringFromEdittext.isEmpty()) {
+			
+		} else  {
+			myWebView.loadUrl(loadThisUrl);
+			Log.i("string", passedUrlStringFromEdittext);
+		}
+		
+		
 
 
 		//hide keyboard
@@ -257,5 +268,11 @@ import android.widget.Toast;
 				Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
+
+
+
+
+
+
 
 }
