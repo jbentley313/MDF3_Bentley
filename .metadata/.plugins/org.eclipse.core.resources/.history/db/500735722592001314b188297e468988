@@ -7,7 +7,6 @@ import java.util.Map;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class ContactSetup extends Activity implements OnClickListener {
@@ -28,7 +28,7 @@ public class ContactSetup extends Activity implements OnClickListener {
 	Context mContext;
 	ListView cList;
 	ArrayList<String> list = new ArrayList<String>();
-	ArrayAdapter<String> adapter;
+	SimpleAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ContactSetup extends Activity implements OnClickListener {
 		addBtn.setOnClickListener(this);
 		saveBtn.setOnClickListener(this);
 		cancelBtn.setOnClickListener(this);
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
+		adapter = new SimpleAdapter(this, android.R.layout.simple_expandable_list_item_1, list);
 		cList.setAdapter(adapter);
 
 		//get the preferences
@@ -92,8 +92,11 @@ public class ContactSetup extends Activity implements OnClickListener {
 
 		case R.id.saveBtn:
 
+
 			String emailString = contactEdittext.getText().toString();
 			Long timeStamp = new Date().getTime();
+
+
 			String currentDateTime = Long.toString(timeStamp);
 
 			//get the preferences
@@ -111,10 +114,6 @@ public class ContactSetup extends Activity implements OnClickListener {
 				saveBtn.setVisibility(View.GONE);
 				cancelBtn.setVisibility(View.GONE);
 				addBtn.setVisibility(View.VISIBLE);
-				
-				Intent refreshConacts = new Intent(this, ContactSetup.class);
-
-			    startActivity(refreshConacts);
 			}
 
 

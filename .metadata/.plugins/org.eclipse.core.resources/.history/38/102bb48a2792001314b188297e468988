@@ -112,9 +112,10 @@ public class ContactSetup extends Activity implements OnClickListener {
 				cancelBtn.setVisibility(View.GONE);
 				addBtn.setVisibility(View.VISIBLE);
 				
-				Intent refreshConacts = new Intent(this, ContactSetup.class);
-
-			    startActivity(refreshConacts);
+//				Intent refreshConacts = new Intent(this, ContactSetup.class);
+//
+//			    startActivity(refreshConacts);
+				adapter.notifyDataSetChanged();
 			}
 
 

@@ -1,19 +1,16 @@
 package com.jbentley.urgenthelp;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,8 +24,6 @@ public class ContactSetup extends Activity implements OnClickListener {
 	EditText contactEdittext;
 	Context mContext;
 	ListView cList;
-	ArrayList<String> list = new ArrayList<String>();
-	ArrayAdapter<String> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +39,18 @@ public class ContactSetup extends Activity implements OnClickListener {
 		addBtn.setOnClickListener(this);
 		saveBtn.setOnClickListener(this);
 		cancelBtn.setOnClickListener(this);
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
-		cList.setAdapter(adapter);
-
+		
 		//get the preferences
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
-
+		
 		Map<String,?> prefString = prefs.getAll();
 
 		for(Map.Entry<String,?> entry : prefString.entrySet()){
-			Log.d("email contacts",entry.getKey() + ": " + 
-					entry.getValue().toString());   
-			String email =  entry.getValue().toString();
-			adapter.add(email);
-
-		}
-
+		            Log.d("email contacts",entry.getKey() + ": " + 
+		                                   entry.getValue().toString());   
+		            
+		 }
+		
 	}
 
 	@Override
@@ -91,9 +82,12 @@ public class ContactSetup extends Activity implements OnClickListener {
 			break;
 
 		case R.id.saveBtn:
+			
 
 			String emailString = contactEdittext.getText().toString();
 			Long timeStamp = new Date().getTime();
+			
+			
 			String currentDateTime = Long.toString(timeStamp);
 
 			//get the preferences
@@ -111,12 +105,8 @@ public class ContactSetup extends Activity implements OnClickListener {
 				saveBtn.setVisibility(View.GONE);
 				cancelBtn.setVisibility(View.GONE);
 				addBtn.setVisibility(View.VISIBLE);
-				
-				Intent refreshConacts = new Intent(this, ContactSetup.class);
-
-			    startActivity(refreshConacts);
 			}
-
+			
 
 
 			break;

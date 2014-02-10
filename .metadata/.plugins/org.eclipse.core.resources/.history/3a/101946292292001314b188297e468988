@@ -16,7 +16,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	public final static  String Tag = "MainActivity";
 	Button setupBtn;
 	Button helpBtn;
-	
+	ListView cList;
 
 
 
@@ -27,11 +27,11 @@ public class MainActivity extends Activity implements OnClickListener{
 
 		setupBtn = (Button) findViewById(R.id.setup);
 		helpBtn = (Button) findViewById(R.id.helpBtn);
-		
+
 
 		setupBtn.setOnClickListener(this);
 		helpBtn.setOnClickListener(this);
-		
+
 
 
 	}

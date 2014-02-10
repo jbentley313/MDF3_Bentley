@@ -7,7 +7,6 @@ import java.util.Map;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -45,8 +44,7 @@ public class ContactSetup extends Activity implements OnClickListener {
 		saveBtn.setOnClickListener(this);
 		cancelBtn.setOnClickListener(this);
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
-		cList.setAdapter(adapter);
-
+cList.setAdapter(adapter);
 		//get the preferences
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 
@@ -56,7 +54,7 @@ public class ContactSetup extends Activity implements OnClickListener {
 			Log.d("email contacts",entry.getKey() + ": " + 
 					entry.getValue().toString());   
 			String email =  entry.getValue().toString();
-			adapter.add(email);
+			
 
 		}
 
@@ -92,8 +90,11 @@ public class ContactSetup extends Activity implements OnClickListener {
 
 		case R.id.saveBtn:
 
+
 			String emailString = contactEdittext.getText().toString();
 			Long timeStamp = new Date().getTime();
+
+
 			String currentDateTime = Long.toString(timeStamp);
 
 			//get the preferences
@@ -111,10 +112,6 @@ public class ContactSetup extends Activity implements OnClickListener {
 				saveBtn.setVisibility(View.GONE);
 				cancelBtn.setVisibility(View.GONE);
 				addBtn.setVisibility(View.VISIBLE);
-				
-				Intent refreshConacts = new Intent(this, ContactSetup.class);
-
-			    startActivity(refreshConacts);
 			}
 
 
