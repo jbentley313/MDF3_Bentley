@@ -65,22 +65,18 @@ public class MainActivity extends Activity implements OnClickListener{
 		if(button.getId() == R.id.helpBtn) {
 			Log.i(Tag, "Help! Button Clicked");
 			new AlertDialog.Builder(this)
-
-			.setTitle("WARNING!")
-			.setMessage("SEND URGENT EMAILS FOR HELP?")
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setTitle("WARNING")
+			.setMessage("Do you really wish to send out this Urgent call for help?")
 			.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
 					//Email contacts
-					   
+//					finish();    
 				}
-			})
-			.setNegativeButton("No", null)
-			.show();
-			
-
+			});
 		}
 
 	}

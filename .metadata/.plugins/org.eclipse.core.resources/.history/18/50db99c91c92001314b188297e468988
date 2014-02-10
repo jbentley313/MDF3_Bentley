@@ -92,8 +92,8 @@ public class ContactSetup extends Activity implements OnClickListener {
 			SharedPreferences.Editor editPrefs = prefs.edit();
 
 			editPrefs.putString(currentDateTime,emailString);
-			if (emailString.isEmpty()) {
-				Toast.makeText(this, "Please enter an email address", Toast.LENGTH_LONG).show();
+			if (emailString == "") {
+				Toast.makeText(mContext, "Please enter an email address", Toast.LENGTH_LONG).show();
 			} else {
 				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();

@@ -54,15 +54,14 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+       <ListView
+  android:id="@android:id/list"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content" >
+</ListView> 
     </LinearLayout>
 
 </LinearLayout>

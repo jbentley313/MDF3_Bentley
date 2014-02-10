@@ -1,7 +1,6 @@
 package com.jbentley.urgenthelp;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import android.opengl.Visibility;
@@ -79,23 +78,21 @@ public class ContactSetup extends Activity implements OnClickListener {
 			break;
 
 		case R.id.saveBtn:
-			
+			addBtn.setVisibility(View.VISIBLE);
 
 			String emailString = contactEdittext.getText().toString();
-			Long timeStamp = new Date().getTime();
-			
-			
-			String currentDateTime = Long.toString(timeStamp);
+			Calendar c = Calendar.getInstance(); 
+			int calenderSeconds = c.get(Calendar.ALL_STYLES);
+			String currentDateTime = Integer.toString(calenderSeconds);
 
 			//get the preferences
 			SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 			SharedPreferences.Editor editPrefs = prefs.edit();
 
 			editPrefs.putString(currentDateTime,emailString);
-			if (emailString.isEmpty()) {
-				Toast.makeText(this, "Please enter an email address", Toast.LENGTH_LONG).show();
+			if (emailString == "") {
+				Toast.makeText(mContext, "Please enter an email address", Toast.LENGTH_LONG).show();
 			} else {
-				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();
 				contactEdittext.setVisibility(View.GONE);
 				contactEdittext.setText("");
