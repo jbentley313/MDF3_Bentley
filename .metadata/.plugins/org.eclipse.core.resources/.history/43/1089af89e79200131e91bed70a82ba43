@@ -1,6 +1,5 @@
 package com.jbentley.urgenthelp;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -200,7 +199,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	
 	void sendEmailNow() {
 		String contactString = null;
-		String allEmailContacts = null;
+		List<String> stringList = new ArrayList<String>();
+		String[] arrayOfStrings = stringList.toArray(new String[stringList.size()]);
 		
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
@@ -208,27 +208,25 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		Log.i(Tag, "deleteEm");
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
-		ArrayList<String> contactArrayList = new ArrayList<String>();
+		 
 		
 		//loop through entries and delete key that is associated with a matched value from argument (emailString)
 		for(Map.Entry<String,?> entry : prefString.entrySet()){
 			
 			
 			 contactString = entry.getValue().toString();
-			contactArrayList.add(contactString);
-			 allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
 			
-			
+			stringArrayList.add(contactString);
 		}
 
 	
 		
+		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{stringArrayList});
 		
-		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
-		i.putExtra(Intent.EXTRA_SUBJECT, "Emergency message sent from UrgentHelp");
-		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at " );
+		i.putExtra(Intent.EXTRA_SUBJECT, "asas");
+		i.putExtra(Intent.EXTRA_TEXT   , "dfd" );
 		try {
-			startActivity(Intent.createChooser(i, "Send message..."));
+			startActivity(Intent.createChooser(i, "Email this headline..."));
 		} catch (android.content.ActivityNotFoundException ex) {
 //			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
 		}

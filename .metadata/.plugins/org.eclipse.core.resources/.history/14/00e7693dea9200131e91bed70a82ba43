@@ -200,7 +200,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	
 	void sendEmailNow() {
 		String contactString = null;
-		String allEmailContacts = null;
+		String strFromArray = null;
 		
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
@@ -215,8 +215,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			
 			
 			 contactString = entry.getValue().toString();
-			contactArrayList.add(contactString);
-			 allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
+			allEmailContacts.add(contactString);
+			 strFromArray = allEmailContacts.toString().replace("[", "").replace("]", "");
 			
 			
 		}
@@ -224,11 +224,11 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	
 		
 		
-		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
-		i.putExtra(Intent.EXTRA_SUBJECT, "Emergency message sent from UrgentHelp");
-		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at " );
+		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{strFromArray});
+		i.putExtra(Intent.EXTRA_SUBJECT, "asas");
+		i.putExtra(Intent.EXTRA_TEXT   , "dfd" );
 		try {
-			startActivity(Intent.createChooser(i, "Send message..."));
+			startActivity(Intent.createChooser(i, "Email this headline..."));
 		} catch (android.content.ActivityNotFoundException ex) {
 //			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
 		}

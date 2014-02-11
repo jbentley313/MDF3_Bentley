@@ -225,10 +225,10 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		
 		
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
-		i.putExtra(Intent.EXTRA_SUBJECT, "Emergency message sent from UrgentHelp");
-		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at " );
+		i.putExtra(Intent.EXTRA_SUBJECT, "asas");
+		i.putExtra(Intent.EXTRA_TEXT   , "dfd" );
 		try {
-			startActivity(Intent.createChooser(i, "Send message..."));
+			startActivity(Intent.createChooser(i, "Email this headline..."));
 		} catch (android.content.ActivityNotFoundException ex) {
 //			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
 		}
