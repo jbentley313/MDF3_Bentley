@@ -42,6 +42,11 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		setupBtn.setOnClickListener(this);
 		helpBtn.setOnClickListener(this);
 
+		latText.setText("Finding Latitude...");
+		longText.setText("Finding Longitude..."); 
+		providerText.setText("Getting Provider..."); 
+				
+		
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		Criteria criteria = new Criteria();
@@ -182,6 +187,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.i(Tag, "onPause");
 		locationManager.removeUpdates(this);
 	}
 }
