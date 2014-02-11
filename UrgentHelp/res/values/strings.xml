@@ -9,5 +9,8 @@
     <string name="title_activity_contact_setup">Contact Setup</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="location_provider_">Location Provider:</string>
+    <string name="latitude_">"Latitude: "</string>
+    <string name="longitude_">"Longitude: "</string>
 
 </resources>

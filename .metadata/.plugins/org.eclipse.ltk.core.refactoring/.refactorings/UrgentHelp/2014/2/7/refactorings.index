@@ -2,3 +2,6 @@
 1392005174929	Extracts string 'Setup' into R.string.setup
 1392007797349	Extracts string 'Save' into R.string.save
 1392007807042	Extracts string 'Cancel' into R.string.cancel
+1392090681222	Extracts string 'Location Provider:' into R.string.location_provider_
+1392091549330	Extracts string 'Latitude: ' into R.string.latitude_
+1392091691152	Extracts string 'Longitude: ' into R.string.longitude_
