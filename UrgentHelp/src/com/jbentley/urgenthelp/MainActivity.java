@@ -1,6 +1,7 @@
 package com.jbentley.urgenthelp;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -36,11 +37,13 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	Button playStopBtn;
 	LocationManager locationManager;
 	private String provider;
+	private Location passedLocation;
 	private TextView latText;
 	private TextView longText;
 	private TextView providerText;
 	private TextView addressTextResults;
 	MediaPlayer player;
+	private String goodPhoneNumber;
 	List<Address> addresses;
 	Context mContext;
 	Geocoder geocoder;
@@ -73,7 +76,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-		player = MediaPlayer.create(this, R.raw.jb1);
+		player = MediaPlayer.create(this, R.raw.scanr);
 	}
 
 
@@ -109,6 +112,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 
+					Log.i(Tag, "help button, onClick get lastknown location");
+					
 					locationManager =  (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 					boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 					boolean NETWORKenabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -118,22 +123,20 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 						sendEmailNow();
 
 					} else {
-						Location location = locationManager.getLastKnownLocation(provider);
 
-
-
-						Log.i(Tag, "help button, onClick get lastknown location");
+						//last known location
+						Location locationtoEmail = passedLocation;
 
 						// Initialize the location fields
-						if (location != null) {
-							providerText.setText(provider);
-							onLocationChanged(location);
+						if (locationtoEmail != null) {
+							
 							sendEmailNow();
+							
 						} else {
 							Log.i("MainAct location NULL", "NULL!");
 							providerText.setText("Provider not available");
-							latText.setText("Location not available");
-							longText.setText("Location not available");
+							latText.setText("Latitude not available");
+							longText.setText("Longitude not available");
 							sendEmailNow();
 						}
 					}
@@ -144,9 +147,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			.show();
 		}
 
-		
-		
-		
+
+
+
 		//play stop audio for police scanner
 		if(button.getId() == R.id.playStopBtn) {
 			if(player.isPlaying()) {
@@ -155,6 +158,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				playStopBtn.setText(R.string.play_police_scanner);
 			} 
 			else {
+				//start player
 				player.start();
 				playStopBtn.setText("STOP");
 			}
@@ -163,15 +167,19 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	}
 
 
-
+	//location change handler
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		Log.i(Tag, "Location changed!");
+
+		
+		
+		
 		addressTextResults.setText("");
 
 		lat = (float) (location.getLatitude());
 		lng = (float) (location.getLongitude());
-		String currentProvider = (location.getProvider());
+		String currentProvider = (location.getProvider().toUpperCase(Locale.getDefault()));
 
 		this.latText.setText(String.valueOf(lat));
 		this.longText.setText(String.valueOf(lng));
@@ -180,7 +188,12 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		//set provider to be used in getting last known location for sending emails
 		provider = currentProvider;
-
+if(provider.equalsIgnoreCase("network")){
+	passedLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	
+} else if (provider.equalsIgnoreCase("gps")){
+	passedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+}
 
 
 		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -231,7 +244,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			Log.i(Tag, "GPS LocationUpdates requested");
 			Criteria myCriteria = new Criteria();
 			myCriteria.setAccuracy(Criteria.ACCURACY_FINE);
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000, 0, this);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000 , 0, this);
 
 		}
 
@@ -309,8 +322,12 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
 
+		//get device telephone number to display in email
 		TelephonyManager telephoneMgr = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
 		String phoneNum = telephoneMgr.getLine1Number();
+		if(phoneNum !=null){
+			goodPhoneNumber = phoneNum;
+		}
 
 		//loop through entries and delete key that is associated with a matched value from argument (emailString)
 		for(Map.Entry<String,?> entry : prefString.entrySet()){
@@ -331,7 +348,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				"My last known Geo coordinates: " + 
 				latText.getText().toString() + ", " + 
 				longText.getText().toString() + "\n" +  "\n" +
-				"If you have received this message, I am in need of immediate help." + "\n" + "\n"+ "My phone number is: " + phoneNum);
+				"If you have received this message, I am in need of immediate help." + "\n" + "\n"+ "My phone number is: " + goodPhoneNumber);
 		try {
 			startActivity(Intent.createChooser(i, "Send message..."));
 		} catch (android.content.ActivityNotFoundException ex) {
@@ -339,7 +356,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		}
 	}
 
-
+//display alert if location is turned off
 	private void displayLocationSettingsAlert() {
 		new AlertDialog.Builder(this)
 
@@ -359,6 +376,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		.setCancelable(true)
 		.show();
 	}
+
+
+
 
 
 
