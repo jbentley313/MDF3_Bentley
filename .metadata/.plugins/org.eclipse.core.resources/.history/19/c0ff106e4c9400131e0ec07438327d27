@@ -193,9 +193,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		Criteria criteria = new Criteria();
 		provider = locationManager.getBestProvider(criteria, false);
 
-		if (!GPSenabled && !NETWORKLocEnabled) {
+		if (!GPSenabled) {
 
-						this.displayLocationSettingsAlert();
+			//			this.displayLocationSettingsAlert();
 
 		} else {
 			Log.i(Tag, "GPS LocationUpdates requested");
@@ -275,7 +275,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 		try {
-			
+			//			String lats = String.valueOf(lat);
+			//			Log.i(Tag, lats);
 			this.addresses = geocoder.getFromLocation(lat, lng, 1);
 			Log.i(Tag, addresses.toString());
 		} catch (IOException e) {

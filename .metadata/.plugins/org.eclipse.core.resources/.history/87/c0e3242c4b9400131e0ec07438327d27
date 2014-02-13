@@ -101,10 +101,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				public void onClick(DialogInterface dialog, int which) {
 
 					locationManager =  (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-					boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-					boolean NETWORKenabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-					if (!GPSenabled && !NETWORKenabled) {
-						Log.i(Tag, "LOCATION TURNED OFF");
+					boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+					if (!enabled) {
+
 						displayLocationSettingsAlert();
 
 
@@ -154,8 +153,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				startActivity(intent);
 			}
 		})
-		.setNegativeButton("No", null)
-		.setCancelable(true)
+		.setCancelable(false)
 		.show();
 	}
 
@@ -166,14 +164,13 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		lat = (float) (location.getLatitude());
 		lng = (float) (location.getLongitude());
 		String currentProvider = (location.getProvider());
-
+		
 		this.latText.setText(String.valueOf(lat));
 		this.longText.setText(String.valueOf(lng));
 		this.providerText.setText(currentProvider);
 		Log.i(Tag, "Lat= " + lat + ", Long= " + lng + " provider= " + currentProvider);
 
-		//set provider to be used in getting last known location for sending emails
-		provider = currentProvider;
+
 	}
 
 
@@ -193,9 +190,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		Criteria criteria = new Criteria();
 		provider = locationManager.getBestProvider(criteria, false);
 
-		if (!GPSenabled && !NETWORKLocEnabled) {
+		if (!GPSenabled) {
 
-						this.displayLocationSettingsAlert();
+//			this.displayLocationSettingsAlert();
 
 		} else {
 			Log.i(Tag, "GPS LocationUpdates requested");
@@ -209,10 +206,10 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			Log.i(Tag, "No Network Location enabled");
 		} else {
 			Log.i(Tag, "Network LocationUpdates requested");
-			//			Criteria myCriteria = new Criteria();
-			//			myCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
+//			Criteria myCriteria = new Criteria();
+//			myCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 15000, 0, this);
-
+			
 		}
 
 
@@ -275,7 +272,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 		try {
-			
+			//			String lats = String.valueOf(lat);
+			//			Log.i(Tag, lats);
 			this.addresses = geocoder.getFromLocation(lat, lng, 1);
 			Log.i(Tag, addresses.toString());
 		} catch (IOException e) {
