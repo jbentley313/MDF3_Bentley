@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.location.Location;
 import android.location.LocationManager;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -24,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ContactSetup extends Activity implements OnClickListener, OnItemClickListener {
@@ -32,6 +35,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 	Button saveBtn;
 	Button cancelBtn;
 	EditText contactEdittext;
+	TextView clickToDeleteTextV;
 	Context mContext;
 	ListView cList;
 	ArrayList<String> list = new ArrayList<String>();
@@ -47,6 +51,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		cancelBtn = (Button) findViewById(R.id.cancelBtn);
 		contactEdittext = (EditText) findViewById(R.id.enterContactEdittext);
 		cList = (ListView) findViewById(R.id.cList);
+		clickToDeleteTextV = (TextView) findViewById(R.id.clickDelete);
 
 		addBtn.setOnClickListener(this);
 		saveBtn.setOnClickListener(this);
@@ -54,8 +59,12 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
 		cList.setAdapter(adapter);
 		cList.setOnItemClickListener(this);
+		
+		
+			
+		
 
-		//get the preferences
+		//get preferences
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 
 		Map<String,?> prefString = prefs.getAll();
@@ -69,7 +78,10 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			adapter.add(email);
 
 		}
-
+		
+		if(adapter.isEmpty()) {
+			clickToDeleteTextV.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -87,7 +99,16 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 		//add button
 		case R.id.addNewContact:
+
+			//show keyboard for contactedittext
+			InputMethodManager inputMethodMgr = (InputMethodManager)
+			getSystemService(Context.INPUT_METHOD_SERVICE);
+			if(inputMethodMgr != null){
+				inputMethodMgr.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
+			}
+			
 			contactEdittext.setVisibility(View.VISIBLE);
+			contactEdittext.requestFocus();
 			saveBtn.setVisibility(View.VISIBLE);
 			cancelBtn.setVisibility(View.VISIBLE);
 			addBtn.setVisibility(View.GONE);
@@ -95,6 +116,14 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 			//cancel button
 		case R.id.cancelBtn:
+			
+			//hide keyboard
+			InputMethodManager inputMethodMgr2 = (InputMethodManager)
+			getSystemService(Context.INPUT_METHOD_SERVICE);
+			if(inputMethodMgr2 != null){
+				inputMethodMgr2.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+			}
+			
 			contactEdittext.setVisibility(View.GONE);
 			contactEdittext.setText("");
 			saveBtn.setVisibility(View.GONE);
@@ -107,18 +136,20 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 			String emailString = contactEdittext.getText().toString();
 
-			//use current device time as key
-			Long timeStamp = new Date().getTime();
-			String currentDateTime = Long.toString(timeStamp);
-
-			//get the preferences
-			SharedPreferences prefs = getSharedPreferences("userPrefs",0);
-			SharedPreferences.Editor editPrefs = prefs.edit();
-
-			editPrefs.putString(currentDateTime,emailString);
 			if (emailString.isEmpty()) {
 				Toast.makeText(this, "Please enter an email address", Toast.LENGTH_LONG).show();
-			} else {
+			}
+			
+			if(isEmailValid(emailString)){
+				//use current device time as key
+				Long timeStamp = new Date().getTime();
+				String currentDateTime = Long.toString(timeStamp);
+
+				//get the preferences
+				SharedPreferences prefs = getSharedPreferences("userPrefs",0);
+				SharedPreferences.Editor editPrefs = prefs.edit();
+
+				editPrefs.putString(currentDateTime,emailString);
 				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();
 				contactEdittext.setVisibility(View.GONE);
@@ -130,10 +161,11 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 				Intent refreshConacts = new Intent(this, ContactSetup.class);
 
 				startActivity(refreshConacts);
+				
+			} else {
+				Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_LONG).show();
 			}
-
-
-
+			
 			break;
 		}
 
@@ -195,7 +227,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 
 
-
+ 
 
 
 
@@ -204,6 +236,11 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 
 	}
+	
+	//email validate
+	public static boolean isEmailValid(CharSequence email) {
+		   return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+		};
 
 
 }

@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.app.Activity;
@@ -162,6 +163,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 		Log.i(Tag, "Location changed!");
+		addressTextResults.setText("");
 
 		lat = (float) (location.getLatitude());
 		lng = (float) (location.getLongitude());
@@ -174,6 +176,32 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		//set provider to be used in getting last known location for sending emails
 		provider = currentProvider;
+
+
+
+		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+		try {
+
+			this.addresses = geocoder.getFromLocation(lat, lng, 1);
+
+			Address address = addresses.get(0);
+			if (address == null) {
+				addressTextResults.setText("Unavailable");
+			} else {
+				int i = 0;
+				while (address.getAddressLine(i) != null) {
+					addressTextResults.append("\n");
+					addressTextResults.append(address.getAddressLine(i++));
+				}
+
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.e(Tag, e.getMessage().toString());
+		}
+
+
 	}
 
 
@@ -183,8 +211,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		super.onResume();
 		Log.i(Tag, "onResume");
-		//		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, mContext);
-		//		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
 
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -195,7 +221,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		if (!GPSenabled && !NETWORKLocEnabled) {
 
-						this.displayLocationSettingsAlert();
+			this.displayLocationSettingsAlert();
 
 		} else {
 			Log.i(Tag, "GPS LocationUpdates requested");
@@ -214,6 +240,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 15000, 0, this);
 
 		}
+
 
 
 	}
@@ -273,22 +300,19 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		}
 
-		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-		try {
-			
-			this.addresses = geocoder.getFromLocation(lat, lng, 1);
-			Log.i(Tag, addresses.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.e(Tag, e.getMessage().toString());
-		}
+
 
 
 		allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
 
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
 		i.putExtra(Intent.EXTRA_SUBJECT, "Emergency message sent from UrgentHelp");
-		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at " );
+		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at address: " + 
+				addressTextResults.getText().toString() + "\n" + 
+				"My last known Geo coordinates: " + 
+				latText.getText().toString() + ", " + 
+				longText.getText().toString() + "\n" +
+				"I initiated this message through my app called UrgentHelp.");
 		try {
 			startActivity(Intent.createChooser(i, "Send message..."));
 		} catch (android.content.ActivityNotFoundException ex) {

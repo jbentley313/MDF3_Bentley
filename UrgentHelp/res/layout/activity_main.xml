@@ -88,7 +88,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="address"
+        android:text="Closest Address: "
         android:id="@+id/addressResults" />
 
 </LinearLayout>
