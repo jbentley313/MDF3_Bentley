@@ -222,19 +222,6 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		.setNegativeButton("No", null)
 		.show();
 
-
-
-
-
-
- 
-
-
-
-
-
-
-
 	}
 	
 	//email validate
