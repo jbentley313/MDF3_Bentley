@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -32,12 +33,14 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public final static  String Tag = "MainActivity";
 	Button setupBtn;
 	Button helpBtn;
+	Button playStopBtn;
 	LocationManager locationManager;
 	private String provider;
 	private TextView latText;
 	private TextView longText;
 	private TextView providerText;
 	private TextView addressTextResults;
+	MediaPlayer player;
 	List<Address> addresses;
 	Context mContext;
 	Geocoder geocoder;
@@ -53,6 +56,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		setupBtn = (Button) findViewById(R.id.setup);
 		helpBtn = (Button) findViewById(R.id.helpBtn);
+		playStopBtn = (Button) findViewById(R.id.playStopBtn);
 		latText = (TextView) findViewById(R.id.latEditText);
 		longText = (TextView) findViewById(R.id.longEditText);
 		providerText = (TextView) findViewById(R.id.providerEditText);
@@ -60,6 +64,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		setupBtn.setOnClickListener(this);
 		helpBtn.setOnClickListener(this);
+		playStopBtn.setOnClickListener(this);
 
 		latText.setText("Getting Latitude...");
 		longText.setText("Getting Longitude..."); 
@@ -67,6 +72,8 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+		player = MediaPlayer.create(this, R.raw.jb1);
 	}
 
 
@@ -108,7 +115,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 					if (!GPSenabled && !NETWORKenabled) {
 						Log.i(Tag, "LOCATION TURNED OFF");
 						displayLocationSettingsAlert();
-
+						sendEmailNow();
 
 					} else {
 						Location location = locationManager.getLastKnownLocation(provider);
@@ -137,11 +144,25 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			.show();
 		}
 
-
+		
+		
+		
+		//play stop audio for police scanner
+		if(button.getId() == R.id.playStopBtn) {
+			if(player.isPlaying()) {
+				player.pause();
+				player.seekTo(0);
+				playStopBtn.setText(R.string.play_police_scanner);
+			} 
+			else {
+				player.start();
+				playStopBtn.setText("STOP");
+			}
+		}
 
 	}
 
-	
+
 
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
@@ -195,7 +216,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		super.onResume();
 		Log.i(Tag, "onResume");
 
-		
+
 		boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		boolean NETWORKLocEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
@@ -233,9 +254,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
 		Log.i(Tag, "onProviderDisabled " + provider);
-		
 
-		
+
+
 	}
 
 
@@ -243,7 +264,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
 		Log.i(Tag, "onProviderEnabled " + provider);
-		
+
 	}
 
 
@@ -251,26 +272,26 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public void onStatusChanged(String provider2, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		String passProvider = null;
-		
-		
-		
+
+
+
 		if(provider2 !=null) {
-			 passProvider = provider2;
+			passProvider = provider2;
 		}
-		
-		
-		
+
+
+
 		if(extras !=null) {
-			
+
 			int satellites = extras.getInt("satellites");
 			Log.i(Tag, "onStatusChanged " + passProvider + " " + status + " " + satellites);
 		}
-		
+
 	}
 
 	@Override
 	protected void onPause() {
-		
+
 		Log.i(Tag, "onPause");
 		locationManager.removeUpdates(this);
 		super.onPause();
@@ -287,7 +308,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
-		
+
 		TelephonyManager telephoneMgr = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
 		String phoneNum = telephoneMgr.getLine1Number();
 
