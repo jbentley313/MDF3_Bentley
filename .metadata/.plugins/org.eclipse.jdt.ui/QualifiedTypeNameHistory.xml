@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.net.Uri"/>
-<fullyQualifiedTypeName name="com.example.webintentlauncher.R.id"/>
-<fullyQualifiedTypeName name="android.webkit.WebView"/>
-<fullyQualifiedTypeName name="android.net.ConnectivityManager"/>
-<fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
-<fullyQualifiedTypeName name="android.gesture.Gesture"/>
-<fullyQualifiedTypeName name="android.webkit.WebSettings"/>
-<fullyQualifiedTypeName name="com.jbentley.week1.MainActivity.WebAppInterface"/>
-<fullyQualifiedTypeName name="android.webkit.WebSettings.TextSize"/>
 <fullyQualifiedTypeName name="android.webkit.JavascriptInterface"/>
 <fullyQualifiedTypeName name="com.jbentley.week1.R.id"/>
 <fullyQualifiedTypeName name="android.widget.ProgressBar"/>
@@ -27,11 +18,8 @@
 <fullyQualifiedTypeName name="android.content.DialogInterface.OnKeyListener"/>
 <fullyQualifiedTypeName name="android.view.View.OnKeyListener"/>
 <fullyQualifiedTypeName name="android.widget.TextView.OnEditorActionListener"/>
-<fullyQualifiedTypeName name="android.view.inputmethod.EditorInfo"/>
-<fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.opengl.Visibility"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.content.SharedPreferences"/>
@@ -43,21 +31,33 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="android.content.DialogInterface"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
 <fullyQualifiedTypeName name="android.widget.SimpleAdapter"/>
 <fullyQualifiedTypeName name="com.jbentley.urgenthelp.ContactSetup"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog.Builder"/>
-<fullyQualifiedTypeName name="android.location.LocationManager"/>
 <fullyQualifiedTypeName name="android.provider.Settings"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemSelectedListener"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
+<fullyQualifiedTypeName name="android.view.inputmethod.EditorInfo"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="android.location.Geocoder"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="android.location.Address"/>
+<fullyQualifiedTypeName name="android.widget.EditText"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.id"/>
+<fullyQualifiedTypeName name="com.jbentley.urgenthelp.MainActivity.GeocoderTask"/>
+<fullyQualifiedTypeName name="java.util.Locale"/>
 <fullyQualifiedTypeName name="android.location.Criteria"/>
 <fullyQualifiedTypeName name="android.location.Location"/>
 <fullyQualifiedTypeName name="android.location.LocationListener"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
-<fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.id"/>
-<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="android.location.LocationManager"/>
 </qualifiedTypeNameHistroy>

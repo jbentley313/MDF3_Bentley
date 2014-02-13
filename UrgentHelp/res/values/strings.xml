@@ -12,5 +12,7 @@
     <string name="location_provider_">Location Provider:</string>
     <string name="latitude_">"Latitude: "</string>
     <string name="longitude_">"Longitude: "</string>
+    <string name="add_or_remove_contacts_that_will_be_alerted_when_you_click_the_urgent_help_button_">Add or remove contacts that will be alerted when you click the urgent help button.</string>
+    <string name="add_new_email_contact">Add new email contact</string>
 
 </resources>

@@ -5,3 +5,5 @@
 1392090681222	Extracts string 'Location Provider:' into R.string.location_provider_
 1392091549330	Extracts string 'Latitude: ' into R.string.latitude_
 1392091691152	Extracts string 'Longitude: ' into R.string.longitude_
+1392151968412	Extracts string 'Add or remove contacts that will be alerted when you click the urgent help button.' into R.string.add_or_remove_contacts_that_will_be_alerted_when_you_click_the_urgent_help_button_
+1392151977427	Extracts string 'Add new email contact' into R.string.add_new_email_contact

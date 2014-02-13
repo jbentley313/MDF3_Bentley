@@ -1,11 +1,14 @@
 package com.jbentley.urgenthelp;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -32,7 +35,12 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	private TextView latText;
 	private TextView longText;
 	private TextView providerText;
+	private TextView addressTextResults;
+	List<Address> addresses;
 	Context mContext;
+	Geocoder geocoder;
+	float lat;
+	float lng;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		latText = (TextView) findViewById(R.id.latEditText);
 		longText = (TextView) findViewById(R.id.longEditText);
 		providerText = (TextView) findViewById(R.id.providerEditText);
+		addressTextResults = (TextView) findViewById(R.id.addressResults);
 
 		setupBtn.setOnClickListener(this);
 		helpBtn.setOnClickListener(this);
@@ -51,18 +60,43 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		latText.setText("Getting Latitude...");
 		longText.setText("Getting Longitude..."); 
 		providerText.setText("Getting Provider..."); 
-				
-		
+
+
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		boolean NETWORKLocEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+
+//		provider = LocationManager.GPS_PROVIDER;
+//		provider = LocationManager.NETWORK_PROVIDER;
+
 		Criteria criteria = new Criteria();
 		provider = locationManager.getBestProvider(criteria, false);
-		if (!enabled) {
+
+		
+
+
+
+
+
+		if (!GPSenabled) {
 
 			this.displayLocationSettingsAlert();
 
 		} else {
-			locationManager.requestLocationUpdates(provider, 1000, 1, this);
+						Criteria myCriteria = new Criteria();
+						myCriteria.setAccuracy(Criteria.ACCURACY_FINE);
+//			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+			Log.i(Tag, "GPS LocationUpdates requested");
+		}
+
+		if (!NETWORKLocEnabled) {
+			Log.i(Tag, "No Network Location enabled");
+		} else {
+						Criteria myCriteria = new Criteria();
+						myCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
+//			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+			Log.i(Tag, "Network LocationUpdates requested");
 		}
 	}
 
@@ -94,10 +128,12 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			.setTitle("WARNING!")
 			.setMessage("SEND URGENT EMAILS FOR HELP?")
 			.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+				
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+					locationManager =  (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 					boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 					if (!enabled) {
 
@@ -105,9 +141,11 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 
 					} else {
-						
 						Location location = locationManager.getLastKnownLocation(provider);
+						
+						
 
+						Log.i(Tag, "help button, onClick get lastknown location");
 
 						// Initialize the location fields
 						if (location != null) {
@@ -115,8 +153,11 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 							onLocationChanged(location);
 							sendEmailNow();
 						} else {
+							Log.i("MainAct location NULL", "NULL!");
+							providerText.setText("Provider not available");
 							latText.setText("Location not available");
 							longText.setText("Location not available");
+							sendEmailNow();
 						}
 					}
 
@@ -129,18 +170,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 
 	}
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		Log.i(Tag, "Location changed!!!!!!!!");
-		float lat = (float) (location.getLatitude());
-		float lng = (float) (location.getLongitude());
-
-		latText.setText(String.valueOf(lat));
-		longText.setText(String.valueOf(lng));
-		providerText.setText(provider);
-
-	}
-
 
 	private void displayLocationSettingsAlert() {
 		new AlertDialog.Builder(this)
@@ -161,10 +190,32 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		.show();
 	}
 
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		Log.i(Tag, "Location changed!");
+
+		lat = (float) (location.getLatitude());
+		lng = (float) (location.getLongitude());
+
+		this.latText.setText(String.valueOf(lat));
+		this.longText.setText(String.valueOf(lng));
+		this.providerText.setText(provider);
+		Log.i(Tag, "Lat= " + lat + ", Long= " + lng + " provider= " + provider);
+
+
+	}
+
+
+
 	@Override
 	protected void onResume() {
+		Log.i(Tag, "onResume");
 		super.onResume();
-		locationManager.requestLocationUpdates(provider, 1000, 1, this);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+		
+
+		
+		
 	}
 
 
@@ -186,7 +237,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public void onStatusChanged(String provider2, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		String statusInt = String.valueOf(status);
-		
+
 		String satellites = extras.get("satellites").toString();
 		Log.i(Tag, "onStatusChanged " + provider2 + " " + statusInt + " " + satellites);
 	}
@@ -197,41 +248,58 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		Log.i(Tag, "onPause");
 		locationManager.removeUpdates(this);
 	}
-	
+
 	void sendEmailNow() {
 		String contactString = null;
 		String allEmailContacts = null;
-		
+
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
 		//get the preferences
-		Log.i(Tag, "deleteEm");
+
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
-		
+
 		//loop through entries and delete key that is associated with a matched value from argument (emailString)
 		for(Map.Entry<String,?> entry : prefString.entrySet()){
-			
-			
-			 contactString = entry.getValue().toString();
+
+
+			contactString = entry.getValue().toString();
 			contactArrayList.add(contactString);
-			 allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
-			
-			
+
+
+
+
 		}
 
-	
-		
-		
+		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+		try {
+			//			String lats = String.valueOf(lat);
+			//			Log.i(Tag, lats);
+			this.addresses = geocoder.getFromLocation(lat, lng, 1);
+			Log.i(Tag, addresses.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.e(Tag, e.getMessage().toString());
+		}
+
+
+		allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
+
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
 		i.putExtra(Intent.EXTRA_SUBJECT, "Emergency message sent from UrgentHelp");
 		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at " );
 		try {
 			startActivity(Intent.createChooser(i, "Send message..."));
 		} catch (android.content.ActivityNotFoundException ex) {
-//			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
+			//			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
+
+
+
+
+
 }

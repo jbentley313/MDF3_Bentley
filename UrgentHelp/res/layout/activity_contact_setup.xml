@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add or remove contacts that will be alerted when you click the urgent help button." />
+        android:text="@string/add_or_remove_contacts_that_will_be_alerted_when_you_click_the_urgent_help_button_" />
 
     <Button
         android:id="@+id/addNewContact"
@@ -22,7 +22,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:text="Add new email contact"
+        android:text="@string/add_new_email_contact"
         android:textColor="@android:color/background_light" />
 
     <EditText
