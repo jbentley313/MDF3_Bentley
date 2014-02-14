@@ -5,7 +5,7 @@
  *  
  *  Feb 13, 2014
  *  
- *  Urgent Help MainActivity allows users to send an emergency message to saved
+ *  Urgent Help allows users to send an emergency message to saved
  *  emails with location data as well as phone number and address.  This is not intended
  *  to be a replacement for 911.  
  */

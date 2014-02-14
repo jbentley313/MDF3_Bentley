@@ -1,13 +1,3 @@
-/*
- * Author: Jason Bentley
- *  
- *  Java2 Week3 Project
- *  
- *  Feb 13, 2014
- *  
- *  ContactSetup.java allows users to add or delete email contacts for use with the app.  Data storage is done with
- *  SharedPreferences.
- */
 package com.jbentley.urgenthelp;
 
 import java.util.ArrayList;
