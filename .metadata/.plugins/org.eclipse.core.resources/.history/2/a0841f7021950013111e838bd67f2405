@@ -352,7 +352,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		i.setType("message/rfc822");
 
 		//get the preferences
-		SharedPreferences prefs = getSharedPreferences("userContacts",0);
+		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
 

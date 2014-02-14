@@ -65,7 +65,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			new AlertDialog.Builder(this)
 
 			.setTitle("Disclaimer")
-			.setMessage("This application is not intended to be a replacement for 911.  If you need emergency help, always dial 911 first.")
+			.setMessage("This application is not intended to be a replacement for 911.  If you need emergency help, dial 911")
 			.setPositiveButton("OK, I understand", new DialogInterface.OnClickListener() {
 
 				//set agreed to disclaimer to true 
@@ -352,7 +352,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		i.setType("message/rfc822");
 
 		//get the preferences
-		SharedPreferences prefs = getSharedPreferences("userContacts",0);
+		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
 
