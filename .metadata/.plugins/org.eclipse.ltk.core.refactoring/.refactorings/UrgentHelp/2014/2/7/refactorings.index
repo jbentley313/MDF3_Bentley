@@ -11,3 +11,4 @@
 1392277320967	Rename resource 'Raw'
 1392279168911	Extracts string 'Play Police Scanner' into R.string.play_police_scanner
 1392334197327	Delete element
+1392338650933	Extracts string 'Tap an address to delete' into R.string.tap_an_address_to_delete

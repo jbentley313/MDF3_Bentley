@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener, LocationListener{
 	public final static  String Tag = "MainActivity";
@@ -55,8 +56,55 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		boolean firstrun = getSharedPreferences("FIRSTRUN", MODE_PRIVATE).getBoolean("firstrun", true);
+		boolean agreedtoDisclaimer = getSharedPreferences("FIRSTRUN", MODE_PRIVATE).getBoolean("agreedToDisclaimer", false);
+		Log.i("FIRSTRUN", String.valueOf(firstrun));
+		Log.i("AGREED", String.valueOf(agreedtoDisclaimer));
+		if (firstrun || !agreedtoDisclaimer){
+		
+			new AlertDialog.Builder(this)
+
+			.setTitle("Disclaimer")
+			.setMessage("This application is not intended to be a replacement for 911.  If you need emergency help, dial 911")
+			.setPositiveButton("OK, I understand", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					getSharedPreferences("FIRSTRUN", MODE_PRIVATE)
+					.edit()
+					.putBoolean("agreedToDisclaimer", true)
+					.commit();
+					
+				}
+
+				
+			})
+			.setNegativeButton("I do not agree", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					getSharedPreferences("FIRSTRUN", MODE_PRIVATE)
+					.edit()
+					.putBoolean("agreedToDisclaimer", false)
+					.commit();
+					finish();
+				}
+			})
+			
+			.show().setCancelable(false);
+			
+			// Save if first run
+			getSharedPreferences("FIRSTRUN", MODE_PRIVATE)
+			.edit()
+			.putBoolean("firstrun", false)
+			.commit();
+		}
+
 		mContext = this;
 
+		//instantiate views
 		setupBtn = (Button) findViewById(R.id.setup);
 		helpBtn = (Button) findViewById(R.id.helpBtn);
 		playStopBtn = (Button) findViewById(R.id.playStopBtn);
@@ -65,6 +113,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		providerText = (TextView) findViewById(R.id.providerEditText);
 		addressTextResults = (TextView) findViewById(R.id.addressResults);
 
+		//set onClick listeners
 		setupBtn.setOnClickListener(this);
 		helpBtn.setOnClickListener(this);
 		playStopBtn.setOnClickListener(this);
@@ -73,15 +122,10 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		longText.setText("Getting Longitude..."); 
 		providerText.setText("Getting Provider..."); 
 
-
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 		player = MediaPlayer.create(this, R.raw.scanr);
 	}
-
-
-
-
 
 	//button onClick
 	@Override
@@ -95,7 +139,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			//contact activity intent
 			Intent contactIntent = new Intent(this, ContactSetup.class);
 			startActivity(contactIntent);
-
 
 		}
 
@@ -113,7 +156,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 				public void onClick(DialogInterface dialog, int which) {
 
 					Log.i(Tag, "help button, onClick get lastknown location");
-					
+
 					locationManager =  (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 					boolean GPSenabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 					boolean NETWORKenabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -129,9 +172,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 						// Initialize the location fields
 						if (locationtoEmail != null) {
-							
+
 							sendEmailNow();
-							
+
 						} else {
 							Log.i("MainAct location NULL", "NULL!");
 							providerText.setText("Provider not available");
@@ -170,11 +213,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	//location change handler
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
+
 		Log.i(Tag, "Location changed!");
 
-		
-		
-		
 		addressTextResults.setText("");
 
 		lat = (float) (location.getLatitude());
@@ -188,14 +229,14 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 
 		//set provider to be used in getting last known location for sending emails
 		provider = currentProvider;
-if(provider.equalsIgnoreCase("network")){
-	passedLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-	
-} else if (provider.equalsIgnoreCase("gps")){
-	passedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-}
+		if(provider.equalsIgnoreCase("network")){
+			passedLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
+		} else if (provider.equalsIgnoreCase("gps")){
+			passedLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		}
 
+		//geocoder to get address based on location
 		Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 		try {
 
@@ -210,19 +251,14 @@ if(provider.equalsIgnoreCase("network")){
 					addressTextResults.append("\n");
 					addressTextResults.append(address.getAddressLine(i++));
 				}
-
-
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.e(Tag, e.getMessage().toString());
 		}
-
-
 	}
 
-
-
+	//called when activity resumes as well as after onCreate
 	@Override
 	protected void onResume() {
 
@@ -236,10 +272,12 @@ if(provider.equalsIgnoreCase("network")){
 		Criteria criteria = new Criteria();
 		provider = locationManager.getBestProvider(criteria, false);
 
+		//if location is turned off, ask user to turn on
 		if (!GPSenabled && !NETWORKLocEnabled) {
 
 			this.displayLocationSettingsAlert();
 
+			//gps location request
 		} else {
 			Log.i(Tag, "GPS LocationUpdates requested");
 			Criteria myCriteria = new Criteria();
@@ -248,6 +286,7 @@ if(provider.equalsIgnoreCase("network")){
 
 		}
 
+		//network location request
 		if (!NETWORKLocEnabled) {
 			Log.i(Tag, "No Network Location enabled");
 		} else {
@@ -255,53 +294,44 @@ if(provider.equalsIgnoreCase("network")){
 			//			Criteria myCriteria = new Criteria();
 			//			myCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 15000, 0, this);
-
 		}
-
-
-
 	}
 
-
+	//if provider disabled 
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
+
 		Log.i(Tag, "onProviderDisabled " + provider);
-
-
-
 	}
 
-
+	//if provider is enabled 
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		Log.i(Tag, "onProviderEnabled " + provider);
 
+		Log.i(Tag, "onProviderEnabled " + provider);
 	}
 
-
+	//if status changes
 	@Override
 	public void onStatusChanged(String provider2, int status, Bundle extras) {
 		// TODO Auto-generated method stub
+
 		String passProvider = null;
-
-
 
 		if(provider2 !=null) {
 			passProvider = provider2;
 		}
-
-
 
 		if(extras !=null) {
 
 			int satellites = extras.getInt("satellites");
 			Log.i(Tag, "onStatusChanged " + passProvider + " " + status + " " + satellites);
 		}
-
 	}
 
+	//if activity pauses the location listener
 	@Override
 	protected void onPause() {
 
@@ -310,14 +340,15 @@ if(provider.equalsIgnoreCase("network")){
 		super.onPause();
 	}
 
+	//send email
 	void sendEmailNow() {
 		String contactString = null;
 		String allEmailContacts = null;
 
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
-		//get the preferences
 
+		//get the preferences
 		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
 		Map<String,?> prefString = prefs.getAll();
 		ArrayList<String> contactArrayList = new ArrayList<String>();
@@ -327,6 +358,8 @@ if(provider.equalsIgnoreCase("network")){
 		String phoneNum = telephoneMgr.getLine1Number();
 		if(phoneNum !=null){
 			goodPhoneNumber = phoneNum;
+		} else {
+			goodPhoneNumber = "unavailable";
 		}
 
 		//loop through entries and delete key that is associated with a matched value from argument (emailString)
@@ -336,11 +369,10 @@ if(provider.equalsIgnoreCase("network")){
 			contactArrayList.add(contactString);
 		}
 
-
-
-
+		//replace all "]" and "[" with ""
 		allEmailContacts = contactArrayList.toString().replace("[", "").replace("]", "");
 
+		//email intents
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
 		i.putExtra(Intent.EXTRA_SUBJECT, "**Emergency message sent from UrgentHelp**");
 		i.putExtra(Intent.EXTRA_TEXT   , "Please send help.  I am at (or near) address: " + 
@@ -352,11 +384,11 @@ if(provider.equalsIgnoreCase("network")){
 		try {
 			startActivity(Intent.createChooser(i, "Send message..."));
 		} catch (android.content.ActivityNotFoundException ex) {
-			//			Toast.makeText(getActivity(), "No email clients installed.", Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, "No email clients installed.", Toast.LENGTH_LONG).show();
 		}
 	}
 
-//display alert if location is turned off
+	//display alert if location is turned off
 	private void displayLocationSettingsAlert() {
 		new AlertDialog.Builder(this)
 
@@ -376,10 +408,4 @@ if(provider.equalsIgnoreCase("network")){
 		.setCancelable(true)
 		.show();
 	}
-
-
-
-
-
-
 }

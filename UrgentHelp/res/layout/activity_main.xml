@@ -94,7 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/closest_address_" />
+            android:text="@string/closest_address_" 
+            android:textColor="@android:color/holo_red_light"/>
 
         <TextView
             android:id="@+id/addressResults"
@@ -108,8 +109,8 @@
             android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/holo_red_light"
             android:text="@string/play_police_scanner"

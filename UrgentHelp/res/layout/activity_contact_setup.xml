@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_or_remove_contacts_that_will_be_alerted_when_you_click_the_urgent_help_button_" 
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/addNewContact"
@@ -60,7 +61,8 @@
         android:id="@+id/clickDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap an address to delete" />
+        android:text="@string/tap_an_address_to_delete" 
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

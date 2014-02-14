@@ -3,25 +3,18 @@ package com.jbentley.urgenthelp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-
-import android.location.Location;
-import android.location.LocationManager;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,13 +52,10 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
 		cList.setAdapter(adapter);
 		cList.setOnItemClickListener(this);
-		
-		
-			
-		
+
 
 		//get preferences
-		SharedPreferences prefs = getSharedPreferences("userPrefs",0);
+		SharedPreferences prefs = getSharedPreferences("userContacts",0);
 
 		Map<String,?> prefString = prefs.getAll();
 
@@ -73,24 +63,19 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			Log.d("email contacts",entry.getKey() + ": " + 
 					entry.getValue().toString());   
 			String email =  entry.getValue().toString();
-			String key = entry.getKey().toString();
 
+			//add email to listview adapter
 			adapter.add(email);
 
 		}
 		
+		//hide delete instructions if no emails are present in the adapter
 		if(adapter.isEmpty()) {
 			clickToDeleteTextV.setVisibility(View.GONE);
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.contact_setup, menu);
-		return true;
-	}
-
+	
 	//button clicks
 	@Override
 	public void onClick(View v) {
@@ -106,7 +91,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			if(inputMethodMgr != null){
 				inputMethodMgr.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
 			}
-			
+
 			contactEdittext.setVisibility(View.VISIBLE);
 			contactEdittext.requestFocus();
 			saveBtn.setVisibility(View.VISIBLE);
@@ -116,14 +101,14 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 			//cancel button
 		case R.id.cancelBtn:
-			
+
 			//hide keyboard
 			InputMethodManager inputMethodMgr2 = (InputMethodManager)
 			getSystemService(Context.INPUT_METHOD_SERVICE);
 			if(inputMethodMgr2 != null){
 				inputMethodMgr2.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 			}
-			
+
 			contactEdittext.setVisibility(View.GONE);
 			contactEdittext.setText("");
 			saveBtn.setVisibility(View.GONE);
@@ -139,14 +124,15 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			if (emailString.isEmpty()) {
 				Toast.makeText(this, "Please enter an email address", Toast.LENGTH_LONG).show();
 			}
-			
+
+			//check for valid email then save
 			if(isEmailValid(emailString)){
 				//use current device time as key
 				Long timeStamp = new Date().getTime();
 				String currentDateTime = Long.toString(timeStamp);
 
 				//get the preferences
-				SharedPreferences prefs = getSharedPreferences("userPrefs",0);
+				SharedPreferences prefs = getSharedPreferences("userContacts",0);
 				SharedPreferences.Editor editPrefs = prefs.edit();
 
 				editPrefs.putString(currentDateTime,emailString);
@@ -158,22 +144,17 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 				cancelBtn.setVisibility(View.GONE);
 				addBtn.setVisibility(View.VISIBLE);
 
-				Intent refreshConacts = new Intent(this, ContactSetup.class);
+				//finish and restart activity
+				finish();
+				startActivity(getIntent());
 
-				startActivity(refreshConacts);
-				
 			} else {
 				Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_LONG).show();
 			}
-			
+
 			break;
 		}
-
-
-
-
 	}
-
 
 	//listview click 
 	@Override
@@ -182,10 +163,10 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 		String emailString = cList.getItemAtPosition(position).toString();
 
+		//pass email string to delete email method
 		deleteEmailEntry(emailString);
 		Log.i(Tag, emailString);
 	}
-
 
 	//delete email from shared prefs
 	public void deleteEmailEntry(final String emailString) {
@@ -201,7 +182,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			public void onClick(DialogInterface dialog, int which) {
 				//get the preferences
 				Log.i(Tag, "deleteEm");
-				SharedPreferences prefs = getSharedPreferences("userPrefs",0);
+				SharedPreferences prefs = getSharedPreferences("userContacts",0);
 				SharedPreferences.Editor editPrefs = prefs.edit();
 				Map<String,?> prefString = prefs.getAll();
 
@@ -213,21 +194,20 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 						Log.i(Tag, "Match");
 						editPrefs.remove(entry.getKey());
 						editPrefs.commit();
+
+						//finish and restart activity
+						finish();
+						startActivity(getIntent());
 					}
-
 				}
-
 			}
 		})
 		.setNegativeButton("No", null)
 		.show();
-
 	}
-	
-	//email validate
+
+	//email validation
 	public static boolean isEmailValid(CharSequence email) {
-		   return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-		};
-
-
+		return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+	};
 }
