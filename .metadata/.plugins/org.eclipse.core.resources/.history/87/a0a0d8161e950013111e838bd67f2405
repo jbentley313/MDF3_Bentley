@@ -68,7 +68,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			.setMessage("This application is not intended to be a replacement for 911.  If you need emergency help, dial 911")
 			.setPositiveButton("OK, I understand", new DialogInterface.OnClickListener() {
 
-				//set agreed to disclaimer to true 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
@@ -83,7 +82,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			})
 			.setNegativeButton("I do not agree", new DialogInterface.OnClickListener() {
 				
-				//user didn't agree to disclaimer
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO Auto-generated method stub
