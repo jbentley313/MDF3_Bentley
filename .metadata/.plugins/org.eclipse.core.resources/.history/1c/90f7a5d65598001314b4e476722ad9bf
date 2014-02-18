@@ -48,7 +48,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 	ListView cList;
 	ArrayList<String> list = new ArrayList<String>();
 	ArrayAdapter<String> adapter;
-	MenuItem addIcon;
+	MenuItem item;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			contactEdittext.setText("");
 			saveBtn.setVisibility(View.GONE);
 			cancelBtn.setVisibility(View.GONE);
-			addIcon.setVisible(true);
+			addBtn.setVisibility(View.VISIBLE);
 			break;
 
 			//save button
@@ -141,13 +141,13 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 				SharedPreferences.Editor editPrefs = prefs.edit();
 
 				editPrefs.putString(currentDateTime,emailString);
-				addIcon.setVisible(true);
+				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();
 				contactEdittext.setVisibility(View.GONE);
 				contactEdittext.setText("");
 				saveBtn.setVisibility(View.GONE);
 				cancelBtn.setVisibility(View.GONE);
-				addIcon.setVisible(true);
+				addBtn.setVisibility(View.VISIBLE);
 
 				//finish and restart activity
 				finish();
@@ -223,7 +223,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contact_setup, menu);
 		
-		 addIcon = menu.findItem(R.id.action_add);
+		 item = menu.findItem(R.id.action_add);
 		
 		return super.onCreateOptionsMenu(menu);
 	}

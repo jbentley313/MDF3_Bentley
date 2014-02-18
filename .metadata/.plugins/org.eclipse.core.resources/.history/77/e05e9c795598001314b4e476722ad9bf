@@ -48,7 +48,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 	ListView cList;
 	ArrayList<String> list = new ArrayList<String>();
 	ArrayAdapter<String> adapter;
-	MenuItem addIcon;
+	MenuItem item;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +61,17 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		
-		//intantiate views
+		
+
+
+		addBtn = (Button) findViewById(R.id.addNewContact);
 		saveBtn = (Button) findViewById(R.id.saveBtn);
 		cancelBtn = (Button) findViewById(R.id.cancelBtn);
 		contactEdittext = (EditText) findViewById(R.id.enterContactEdittext);
 		cList = (ListView) findViewById(R.id.cList);
 		clickToDeleteTextV = (TextView) findViewById(R.id.clickDelete);
 
-		
+		addBtn.setOnClickListener(this);
 		saveBtn.setOnClickListener(this);
 		cancelBtn.setOnClickListener(this);
 		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
@@ -104,6 +107,23 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 
+		//add button
+		case R.id.addNewContact:
+
+			//show keyboard for contactedittext
+			InputMethodManager inputMethodMgr = (InputMethodManager)
+			getSystemService(Context.INPUT_METHOD_SERVICE);
+			if(inputMethodMgr != null){
+				inputMethodMgr.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
+			}
+
+			contactEdittext.setVisibility(View.VISIBLE);
+			contactEdittext.requestFocus();
+			saveBtn.setVisibility(View.VISIBLE);
+			cancelBtn.setVisibility(View.VISIBLE);
+			addBtn.setVisibility(View.GONE);
+			break;
+
 			//cancel button
 		case R.id.cancelBtn:
 
@@ -118,7 +138,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 			contactEdittext.setText("");
 			saveBtn.setVisibility(View.GONE);
 			cancelBtn.setVisibility(View.GONE);
-			addIcon.setVisible(true);
+			addBtn.setVisibility(View.VISIBLE);
 			break;
 
 			//save button
@@ -141,13 +161,13 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 				SharedPreferences.Editor editPrefs = prefs.edit();
 
 				editPrefs.putString(currentDateTime,emailString);
-				addIcon.setVisible(true);
+				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();
 				contactEdittext.setVisibility(View.GONE);
 				contactEdittext.setText("");
 				saveBtn.setVisibility(View.GONE);
 				cancelBtn.setVisibility(View.GONE);
-				addIcon.setVisible(true);
+				addBtn.setVisibility(View.VISIBLE);
 
 				//finish and restart activity
 				finish();
@@ -223,7 +243,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.contact_setup, menu);
 		
-		 addIcon = menu.findItem(R.id.action_add);
+		 item = menu.findItem(R.id.action_add);
 		
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -251,7 +271,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		
 			break;
 			
-		case R.id.action_add:
+		case R.id.addNewContact:
 			//show keyboard for contactedittext
 			InputMethodManager inputMethodMgr = (InputMethodManager)
 			getSystemService(Context.INPUT_METHOD_SERVICE);

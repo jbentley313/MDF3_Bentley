@@ -141,7 +141,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 				SharedPreferences.Editor editPrefs = prefs.edit();
 
 				editPrefs.putString(currentDateTime,emailString);
-				addIcon.setVisible(true);
+				addBtn.setVisibility(View.VISIBLE);
 				editPrefs.commit();
 				contactEdittext.setVisibility(View.GONE);
 				contactEdittext.setText("");

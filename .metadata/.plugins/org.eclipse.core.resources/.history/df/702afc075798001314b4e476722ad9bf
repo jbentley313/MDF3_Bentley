@@ -435,7 +435,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
+		inflater.inflate(R.menu.contact_setup, menu);
 		
 		
 		
