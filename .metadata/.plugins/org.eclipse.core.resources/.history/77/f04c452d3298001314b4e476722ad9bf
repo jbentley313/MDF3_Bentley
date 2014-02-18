@@ -12,6 +12,7 @@
 package com.jbentley.urgenthelp;
 
 import java.io.IOException;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,9 +25,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -66,8 +67,6 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		
-		
 		
 		boolean agreedtoDisclaimer = getSharedPreferences("FIRSTRUN", MODE_PRIVATE).getBoolean("agreedToDisclaimer", false);
 		
@@ -423,6 +422,4 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		.setCancelable(true)
 		.show();
 	}
-	
-	
 }

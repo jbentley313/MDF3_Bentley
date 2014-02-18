@@ -26,7 +26,6 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -66,7 +65,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		
+		//action bar back button
+		ActionBar actionBar = getSupportActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		
 		boolean agreedtoDisclaimer = getSharedPreferences("FIRSTRUN", MODE_PRIVATE).getBoolean("agreedToDisclaimer", false);
@@ -423,6 +424,4 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		.setCancelable(true)
 		.show();
 	}
-	
-	
 }

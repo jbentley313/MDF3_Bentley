@@ -53,10 +53,12 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_setup);
 
-		//action bar icon home button
+		//action bar back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+//		actionBar.set
+		
+//		actionBar.setDisplayShowHomeEnabled(true);
 
 		addBtn = (Button) findViewById(R.id.addNewContact);
 		saveBtn = (Button) findViewById(R.id.saveBtn);

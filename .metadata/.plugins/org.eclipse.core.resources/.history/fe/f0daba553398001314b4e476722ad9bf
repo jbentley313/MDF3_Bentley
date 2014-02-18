@@ -66,7 +66,9 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		
+		//action bar back button
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		
 		boolean agreedtoDisclaimer = getSharedPreferences("FIRSTRUN", MODE_PRIVATE).getBoolean("agreedToDisclaimer", false);
