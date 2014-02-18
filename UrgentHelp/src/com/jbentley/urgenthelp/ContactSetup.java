@@ -14,15 +14,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ActionBar.OnNavigationListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +57,7 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 
 		//action bar icon home button
 		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowHomeEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 
@@ -230,26 +233,43 @@ public class ContactSetup extends Activity implements OnClickListener, OnItemCli
 		return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
 	}
 
-	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu items for use in the action bar
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.contact_setup, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	//action bar items click
 	@Override
-	  public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	    case android.R.id.home:
-	      Intent intent = new Intent(this, MainActivity.class);
-	      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	      startActivity(intent);
-	      break;
-	      
-	    case R.id.action_settings:
-//	      intent = new Intent(this, ThirdActivity.class);
-//	      startActivity(intent);
-	    default:
-	      break;
-	    }
-	    return super.onOptionsItemSelected(item);
-	  }
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			Intent intent = new Intent(this, MainActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			break;
+
+		case R.id.action_author:
+			new AlertDialog.Builder(this)
+
+			.setTitle("About the Author")
+			.setMessage("Jason Bentley is currently enrolled at Full Sail University for Mobile Development.  He plans on making coding his new career after graduation.")
+			.setPositiveButton("Ok", null)
+			
+			.setCancelable(true)
+			.show();
+		
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 
-	
+
+
+
 }
