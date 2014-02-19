@@ -9,5 +9,7 @@
     <string name="take_screenshot">Take screenshot!</string>
     <string name="go_">Go!</string>
     <string name="enter_url">Enter Url</string>
+    <string name="title_activity_widget_config">WidgetConfigActivity</string>
+    <string name="title_activity_bsbwidget_provider">BSBWidgetProvider</string>
 
 </resources>

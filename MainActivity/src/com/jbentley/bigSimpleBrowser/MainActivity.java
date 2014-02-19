@@ -19,6 +19,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,6 +41,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -247,7 +250,16 @@ import android.widget.Toast;
 			findViewById(R.id.progressBar).setVisibility(View.GONE);
 			String currentUrlString = myWebView.getUrl();
 			urlEditText.setText(currentUrlString);
+			
+			
 
+			
+			Intent widgeIntent = new Intent(getApplicationContext(), BSBWidgetProvider.class);
+			widgeIntent.putExtra("urlVisited", urlString);
+			
+			sendBroadcast(widgeIntent);
+			
+			
 			//set webview to zoomable
 			myWebView.getSettings().setBuiltInZoomControls(true);
 		}
@@ -266,4 +278,7 @@ import android.widget.Toast;
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
 
+	
+	
+	
 }

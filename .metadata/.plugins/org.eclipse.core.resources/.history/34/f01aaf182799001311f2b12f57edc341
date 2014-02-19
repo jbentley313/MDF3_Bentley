@@ -1,0 +1,12 @@
+package com.jbentley.bigSimpleBrowser;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.appwidget.AppWidgetProvider;
+import android.view.Menu;
+
+public class BSBWidgetProvider extends AppWidgetProvider {
+
+	
+
+}
