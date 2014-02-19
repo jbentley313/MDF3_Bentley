@@ -23,6 +23,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.text.InputType;
 import android.util.Log;
@@ -252,12 +253,21 @@ import android.widget.Toast;
 			urlEditText.setText(currentUrlString);
 			
 			
+			//get the preferences
+			SharedPreferences prefs = getSharedPreferences("bsbUrls",0);
+			SharedPreferences.Editor editPrefs = prefs.edit();
 
+			editPrefs.putString("urlVisited",url);
+			editPrefs.commit();
+			
 			
 			Intent widgeIntent = new Intent(getApplicationContext(), BSBWidgetProvider.class);
-			widgeIntent.putExtra("urlVisited", urlString);
+			widgeIntent.putExtra("urlVisited", url);
 			
 			sendBroadcast(widgeIntent);
+			
+			
+			
 			
 			
 			//set webview to zoomable
