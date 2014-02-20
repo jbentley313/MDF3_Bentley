@@ -68,23 +68,11 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 					//set text
 					remoteViews.setTextViewText(R.id.latestHeadlines, passThisURL);
 
-					//attatch button intent to pending intent 
+					//attatch button intent to pending intent to onclick button
 					Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(passThisURL));
 					PendingIntent pi = PendingIntent.getActivity(this, 0, buttonIntent, 0);
 
-					//set onclick install button
-					remoteViews.setOnClickPendingIntent(R.id.launchBtn, pi);
-					
-					AppWidgetManager.getInstance(this).updateAppWidget(WidgetId	, remoteViews);
-					
-					
-					
-					
-					Intent resultValue = new Intent();
-					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
-					setResult(RESULT_OK, resultValue);
-					
-					finish();
+					remoteViews.setOnClickPendingIntent(R.id.instalBtn, pi);
 
 				} else{
 					AlertDialog.Builder builder = new AlertDialog.Builder(this)

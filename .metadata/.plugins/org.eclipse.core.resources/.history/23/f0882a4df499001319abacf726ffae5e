@@ -43,7 +43,7 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 						.replace("https://", ""));
 
 				Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVisited));
-				PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, 0);
+				PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 				rv.setOnClickPendingIntent(R.id.launchBtn, pi);
 

@@ -10,21 +10,22 @@
         android:layout_height="wrap_content"
         android:text="The BSB Widget shows the last visited web page on Big Simple Browser.  To launch the web page, click the BSB logo!" />
 
-    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please choose a default URL: " 
+        android:paddingTop="30dp"/>
 
     <EditText
         android:id="@+id/defaultWebEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Choose a default URL (ex: www.google.com)"
-        android:inputType="textNoSuggestions"
-         />
+        android:text="Please choose a default URL: " />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/instalBtn"
-        android:text="Install!"
-        />
+        android:text="Install!"/>
 
 </LinearLayout>

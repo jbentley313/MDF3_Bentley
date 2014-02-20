@@ -16,8 +16,7 @@
         android:id="@+id/defaultWebEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Choose a default URL (ex: www.google.com)"
-        android:inputType="textNoSuggestions"
+        android:hint="Please choose a default URL (example: www.google.com)"
          />
 
     <Button
@@ -25,6 +24,6 @@
         android:layout_height="wrap_content" 
         android:id="@+id/instalBtn"
         android:text="Install!"
-        />
+        android:inputType="textNoSuggestions"/>
 
 </LinearLayout>

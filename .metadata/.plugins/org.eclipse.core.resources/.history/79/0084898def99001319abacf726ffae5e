@@ -33,7 +33,7 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 		if(urlVisited != null){
 			Log.i("ZZZZZZZZZZZZZURL", urlVisited);
 
-			
+			if(!urlVisited.contains("google.com")) {
 				Log.i("RECEIVED onReceive", urlVisited);
 				super.onReceive(context, intent);
 
@@ -53,8 +53,10 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 
 
 			}
-			
-		
+			RemoteViews rv =  new RemoteViews(context.getPackageName(), R.layout.bsbwidget_layout);
+			ComponentName widget = new ComponentName(context, BSBWidgetProvider.class);
+			AppWidgetManager.getInstance(context).updateAppWidget(widget, rv);
+		}
 		
 	}
 

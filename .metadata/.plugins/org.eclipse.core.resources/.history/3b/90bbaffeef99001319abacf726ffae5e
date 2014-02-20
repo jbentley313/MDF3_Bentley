@@ -33,7 +33,7 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 		if(urlVisited != null){
 			Log.i("ZZZZZZZZZZZZZURL", urlVisited);
 
-			
+			if(!urlVisited.contains("google.com")) {
 				Log.i("RECEIVED onReceive", urlVisited);
 				super.onReceive(context, intent);
 
@@ -42,10 +42,10 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 						.replace("http://", "")
 						.replace("https://", ""));
 
-				Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVisited));
-				PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, 0);
-
-				rv.setOnClickPendingIntent(R.id.launchBtn, pi);
+//				Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVisited));
+//				PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, 0);
+//
+//				rv.setOnClickPendingIntent(R.id.launchBtn, pi);
 
 				ComponentName widget = new ComponentName(context, BSBWidgetProvider.class);
 				AppWidgetManager.getInstance(context).updateAppWidget(widget, rv);
@@ -54,7 +54,7 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 
 			}
 			
-		
+		}
 		
 	}
 

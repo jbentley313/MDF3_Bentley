@@ -27,13 +27,11 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 		// TODO Auto-generated method stub
 
 
-		
-		
 		String urlVisited = intent.getStringExtra("urlVisited");
 		if(urlVisited != null){
 			Log.i("ZZZZZZZZZZZZZURL", urlVisited);
 
-			
+			if(urlVisited != "http://www.google.com") {
 				Log.i("RECEIVED onReceive", urlVisited);
 				super.onReceive(context, intent);
 
@@ -53,8 +51,8 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 
 
 			}
-			
-		
+
+		}
 		
 	}
 
