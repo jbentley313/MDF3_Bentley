@@ -14,7 +14,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 public class BSBWidgetProvider extends AppWidgetProvider {
-		public static String Tag = "BSBWidgetProvider";
+	//	public static String DISPLAY_LASTURL = "DisplayLastURL";
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
@@ -27,35 +27,35 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 		// TODO Auto-generated method stub
 
 
-
-
+		
+		
 		String urlVisited = intent.getStringExtra("urlVisited");
 		if(urlVisited != null){
-			Log.i(Tag, urlVisited);
+			Log.i("ZZZZZZZZZZZZZURL", urlVisited);
 
+			
+				Log.i("RECEIVED onReceive", urlVisited);
+				super.onReceive(context, intent);
 
-			Log.i("onReceive", urlVisited);
-			super.onReceive(context, intent);
+				RemoteViews rv =  new RemoteViews(context.getPackageName(), R.layout.bsbwidget_layout);
+				rv.setTextViewText(R.id.latestHeadlines, urlVisited
+						.replace("http://", "")
+						.replace("https://", ""));
 
-			RemoteViews rv =  new RemoteViews(context.getPackageName(), R.layout.bsbwidget_layout);
-			rv.setTextViewText(R.id.latestHeadlines, urlVisited
-					.replace("http://", "")
-					.replace("https://", ""));
+				Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVisited));
+				PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, 0);
 
-			Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlVisited));
-			PendingIntent pi = PendingIntent.getActivity(context, 0, buttonIntent, 0);
+				rv.setOnClickPendingIntent(R.id.launchBtn, pi);
 
-			rv.setOnClickPendingIntent(R.id.launchBtn, pi);
-
-			ComponentName widget = new ComponentName(context, BSBWidgetProvider.class);
-			AppWidgetManager.getInstance(context).updateAppWidget(widget, rv);
-
-
-
-		}
+				ComponentName widget = new ComponentName(context, BSBWidgetProvider.class);
+				AppWidgetManager.getInstance(context).updateAppWidget(widget, rv);
 
 
 
+			}
+			
+		
+		
 	}
 
 
@@ -65,7 +65,7 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 			int[] appWidgetIds) {
 		// TODO Auto-generated method stub
 		//		Log.i("UPDATE Update", "MSG");
-
+		
 	}
 
 

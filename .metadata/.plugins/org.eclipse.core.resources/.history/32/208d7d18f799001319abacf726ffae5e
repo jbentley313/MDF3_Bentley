@@ -56,53 +56,24 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 			//if not an invalid widgetid 
 			if (WidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 
-				//get edittext text
-				String passThisURL = defaultWebPage.getText().toString();
 
 
 				RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.bsbwidget_layout);
 
-				//check to see if it is a valid url
-				if(isValidUrl(passThisURL)){
 
-					//set text
-					remoteViews.setTextViewText(R.id.latestHeadlines, passThisURL);
 
-					//attatch button intent to pending intent 
-					Intent buttonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(passThisURL));
-					PendingIntent pi = PendingIntent.getActivity(this, 0, buttonIntent, 0);
+				AppWidgetManager.getInstance(this).updateAppWidget(WidgetId	, remoteViews);
 
-					//set onclick install button
-					remoteViews.setOnClickPendingIntent(R.id.launchBtn, pi);
-					
-					AppWidgetManager.getInstance(this).updateAppWidget(WidgetId	, remoteViews);
-					
-					Intent resultValue = new Intent();
-					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
-					setResult(RESULT_OK, resultValue);
-					
-					finish();
 
-				} else{
-					AlertDialog.Builder builder = new AlertDialog.Builder(this)
-					.setMessage("This is not a valid URL, please try again.")
-					.setCancelable(true);
-					builder.create().show();
-				}
 
+
+				Intent resultValue = new Intent();
+				resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
+				setResult(RESULT_OK, resultValue);
+
+				finish();
 
 			}
 		}
-
 	}
-
-	private boolean isValidUrl(String url) {
-		Pattern p = Patterns.WEB_URL;
-		Matcher m = p.matcher(url);
-		if(m.matches())
-			return true;
-		else
-			return false;
-	}
-
 }

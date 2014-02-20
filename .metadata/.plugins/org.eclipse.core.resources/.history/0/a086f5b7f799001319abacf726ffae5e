@@ -31,10 +31,10 @@ public class BSBWidgetProvider extends AppWidgetProvider {
 
 		String urlVisited = intent.getStringExtra("urlVisited");
 		if(urlVisited != null){
-			Log.i(Tag, urlVisited);
+			Log.i("T", urlVisited);
 
 
-			Log.i("onReceive", urlVisited);
+			Log.i("RECEIVED onReceive", urlVisited);
 			super.onReceive(context, intent);
 
 			RemoteViews rv =  new RemoteViews(context.getPackageName(), R.layout.bsbwidget_layout);

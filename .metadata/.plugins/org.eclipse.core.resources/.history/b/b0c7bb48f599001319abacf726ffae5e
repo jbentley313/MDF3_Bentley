@@ -77,6 +77,9 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 					
 					AppWidgetManager.getInstance(this).updateAppWidget(WidgetId	, remoteViews);
 					
+					
+					
+					
 					Intent resultValue = new Intent();
 					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
 					setResult(RESULT_OK, resultValue);
