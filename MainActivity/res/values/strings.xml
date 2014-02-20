@@ -11,5 +11,9 @@
     <string name="enter_url">Enter Url</string>
     <string name="title_activity_widget_config">WidgetConfigActivity</string>
     <string name="title_activity_bsbwidget_provider">BSBWidgetProvider</string>
+    <string name="last_url_visited_will_be_displayed_here">Last URL visited will be displayed here</string>
+    <string name="choose_a_starting_url_ex_www_google_com_">Choose a starting URL (ex: www.google.com)</string>
+    <string name="install_">Install!</string>
+    <string name="the_bsb_widget_shows_the_last_visited_web_page_on_big_simple_browser_to_launch_the_latest_web_page_click_the_bsb_logo_">The BSB Widget shows the last visited web page on Big Simple Browser.  To launch the latest web page after using Big Simple Browser, click the BSB logo!</string>
 
 </resources>

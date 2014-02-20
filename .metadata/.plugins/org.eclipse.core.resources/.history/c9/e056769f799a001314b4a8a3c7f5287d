@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/the_bsb_widget_shows_the_last_visited_web_page_on_big_simple_browser_to_launch_the_latest_web_page_click_the_bsb_logo_" />
+
+    
+
+    <EditText
+        android:id="@+id/defaultWebEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/choose_a_starting_url_ex_www_google_com_"
+        android:inputType="textNoSuggestions"
+         />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/instalBtn"
+        android:text="@string/install_"
+        android:background="@android:color/background_dark"
+        />
+
+</LinearLayout>

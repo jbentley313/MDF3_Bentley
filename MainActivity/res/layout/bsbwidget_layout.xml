@@ -19,7 +19,7 @@
             android:layout_weight="3"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:text="" />
+            android:text="@string/last_url_visited_will_be_displayed_here" />
 
         <Button
             android:id="@+id/launchBtn"

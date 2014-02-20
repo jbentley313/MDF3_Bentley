@@ -1,3 +1,10 @@
+/*
+ * WidgetConfigActivity allows the widget to be configured with an initial URL with intent when installed
+ * When the user visits any url on Big Simple Browser, the latest URL that is visited shows up in the widget along
+ * with a pending intent on the logo as a button
+ * 
+ * Author: Jason Bentley
+ */
 package com.jbentley.bigSimpleBrowser;
 
 import java.net.URL;
@@ -60,7 +67,7 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 				//get edittext text
 				String passThisURL = defaultWebPage.getText().toString();
 
-
+				//remote views
 				RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.bsbwidget_layout);
 
 				//check to see if it is a valid url
@@ -85,6 +92,8 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
 					setResult(RESULT_OK, resultValue);
 
+					
+					
 					finish();
 
 				} else{

@@ -8,7 +8,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The BSB Widget shows the last visited web page on Big Simple Browser.  To launch the web page, click the BSB logo!" />
+        android:text="@string/the_bsb_widget_shows_the_last_visited_web_page_on_big_simple_browser_to_launch_the_latest_web_page_click_the_bsb_logo_" 
+        android:textSize="20sp"/>
 
     
 
@@ -16,7 +17,7 @@
         android:id="@+id/defaultWebEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Choose a default URL (ex: www.google.com)"
+        android:hint="@string/choose_a_starting_url_ex_www_google_com_"
         android:inputType="textNoSuggestions"
          />
 
@@ -24,7 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:id="@+id/instalBtn"
-        android:text="Install!"
+        android:text="@string/install_"
+        android:textColor="@android:color/white"
+        android:background="@android:color/background_dark"
         />
 
 </LinearLayout>
