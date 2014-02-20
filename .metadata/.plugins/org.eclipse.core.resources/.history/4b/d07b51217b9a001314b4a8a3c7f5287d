@@ -3,7 +3,7 @@
  *  
  *  Java2 Week3 Project
  *  
- *  Feb 20, 2014
+ *  Feb 13, 2014
  *  
  *  Urgent Help MainActivity allows users to send an emergency message to saved
  *  emails with location data as well as phone number and address.  This is not intended
@@ -26,6 +26,7 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,6 +40,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;

@@ -3,7 +3,7 @@
  *  
  *  Java2 Week3 Project
  *  
- *  Feb 20, 2014
+ *  Feb 13, 2014
  *  
  *  ContactSetup.java allows users to add or delete email contacts for use with the app.  Data storage is done with
  *  SharedPreferences.
