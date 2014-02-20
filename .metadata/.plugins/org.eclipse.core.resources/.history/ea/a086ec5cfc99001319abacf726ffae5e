@@ -72,7 +72,7 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 							.replace("http://", "")
 							.replace("https://", "");
 					//attatch button intent to pending intent 
-					Intent defaultButtonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + strippedURL));
+					Intent defaultButtonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cnn.com"));
 					PendingIntent defaultpi = PendingIntent.getActivity(this, 0, defaultButtonIntent, 0);
 
 					//set onclick install button

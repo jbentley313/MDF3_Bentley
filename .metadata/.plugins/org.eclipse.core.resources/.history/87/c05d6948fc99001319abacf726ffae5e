@@ -68,23 +68,21 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 
 					//set text
 					remoteViews.setTextViewText(R.id.latestHeadlines, passThisURL);
-					String strippedURL = passThisURL
-							.replace("http://", "")
-							.replace("https://", "");
+
 					//attatch button intent to pending intent 
-					Intent defaultButtonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + strippedURL));
+					Intent defaultButtonIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cnn.com"));
 					PendingIntent defaultpi = PendingIntent.getActivity(this, 0, defaultButtonIntent, 0);
 
 					//set onclick install button
 					remoteViews.setOnClickPendingIntent(R.id.launchBtn, defaultpi);
-
+					
 					ComponentName widget = new ComponentName(getApplicationContext(), BSBWidgetProvider.class);
 					AppWidgetManager.getInstance(this).updateAppWidget(widget, remoteViews);
-
+					
 					Intent resultValue = new Intent();
 					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, WidgetId);
 					setResult(RESULT_OK, resultValue);
-
+					
 					finish();
 
 				} else{
