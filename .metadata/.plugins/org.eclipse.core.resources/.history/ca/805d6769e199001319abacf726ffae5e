@@ -5,11 +5,10 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class WidgetConfigActivity extends Activity implements OnClickListener{
+public class WidgetConfigActivity extends Activity implements android.view.View.OnClickListener{
 
 	
 	@Override

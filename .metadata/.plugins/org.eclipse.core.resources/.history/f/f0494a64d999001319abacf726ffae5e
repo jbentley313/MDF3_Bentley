@@ -59,7 +59,7 @@ import android.widget.Toast;
 	Button goBtn;
 	ProgressBar progressBar;
 	EditText urlEditText;
-	
+	public static String DISPLAY_LASTURL = "DisplayLastURL";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		mContext = this;
@@ -256,7 +256,7 @@ import android.widget.Toast;
 			//widget intent
 			Intent widgeIntent = new Intent(getApplicationContext(), BSBWidgetProvider.class);
 			widgeIntent.putExtra("urlVisited", currentUrlString);
-
+//			widgeIntent.setAction(DISPLAY_LASTURL);
 			
 			//send broadcast to widget
 			sendBroadcast(widgeIntent);

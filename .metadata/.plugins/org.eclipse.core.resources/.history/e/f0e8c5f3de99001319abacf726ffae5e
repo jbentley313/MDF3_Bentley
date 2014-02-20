@@ -2,24 +2,17 @@ package com.jbentley.bigSimpleBrowser;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
+import android.appwidget.AppWidgetManager;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 
 public class WidgetConfigActivity extends Activity implements OnClickListener{
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_widget_config);
-		
-		EditText defaultWebPage = (EditText) this.findViewById(R.id.defaultWebEditText);
-		Button installBtn = (Button) this.findViewById(R.id.instalBtn);
-		installBtn.setOnClickListener(this);
 		
 	}
 
@@ -31,12 +24,19 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 	}
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		Log.i("CONFIG", "install button");
-		
+	public void onClick(DialogInterface dialog, int which) {
+//		// TODO Auto-generated method stub
+//		Bundle extras = getIntent().getExtras();
+//		if (extras != null) {
+//			int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+//			
+//			if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+//				
+//			}
+//		}
+//		
 	}
-
+	
 	
 
 }

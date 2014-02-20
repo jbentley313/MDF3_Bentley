@@ -38,10 +38,7 @@
         </activity>
         <activity
             android:name="com.jbentley.bigSimpleBrowser.WidgetConfigActivity"
-            android:label="@string/title_activity_widget_config" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
+            android:label="activity_widget_config" >
         </activity>
         <activity
             android:name="com.jbentley.bigSimpleBrowser.BSBWidgetProvider"
@@ -50,7 +47,8 @@
 
         <receiver android:name="com.jbentley.bigSimpleBrowser.BSBWidgetProvider" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                    
             </intent-filter>
 
             <meta-data
