@@ -54,10 +54,10 @@
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog.Builder"/>
 <fullyQualifiedTypeName name="android.net.Uri"/>
-<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.appwidget.AppWidgetManager"/>
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.BSBWidgetProvider"/>
 <fullyQualifiedTypeName name="android.app.PendingIntent"/>
 <fullyQualifiedTypeName name="android.content.SharedPreferences"/>
+<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
 </qualifiedTypeNameHistroy>
