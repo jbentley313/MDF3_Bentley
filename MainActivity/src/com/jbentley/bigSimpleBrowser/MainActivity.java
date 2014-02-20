@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -58,7 +59,7 @@ import android.widget.Toast;
 	Button goBtn;
 	ProgressBar progressBar;
 	EditText urlEditText;
-
+	public static String DISPLAY_LASTURL = "DisplayLastURL";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		mContext = this;
@@ -251,25 +252,19 @@ import android.widget.Toast;
 			findViewById(R.id.progressBar).setVisibility(View.GONE);
 			String currentUrlString = myWebView.getUrl();
 			urlEditText.setText(currentUrlString);
-			
-			
-			//get the preferences
-			SharedPreferences prefs = getSharedPreferences("bsbUrls",0);
-			SharedPreferences.Editor editPrefs = prefs.edit();
 
-			editPrefs.putString("urlVisited",url);
-			editPrefs.commit();
-			
-			
+			//widget intent
 			Intent widgeIntent = new Intent(getApplicationContext(), BSBWidgetProvider.class);
-			widgeIntent.putExtra("urlVisited", url);
+			widgeIntent.putExtra("urlVisited", currentUrlString);
+//			widgeIntent.setAction(DISPLAY_LASTURL);
 			
+			//send broadcast to widget
 			sendBroadcast(widgeIntent);
-			
-			
-			
-			
-			
+
+
+
+
+
 			//set webview to zoomable
 			myWebView.getSettings().setBuiltInZoomControls(true);
 		}
@@ -288,7 +283,7 @@ import android.widget.Toast;
 		inputMethodManager.hideSoftInputFromWindow(urlEditText.getWindowToken(), 0);
 	}
 
-	
-	
-	
+
+
+
 }

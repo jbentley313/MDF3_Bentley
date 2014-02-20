@@ -25,16 +25,16 @@ public class WidgetConfigActivity extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		// TODO Auto-generated method stub
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-			
-			if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-				
-			}
-		}
-		
+//		// TODO Auto-generated method stub
+//		Bundle extras = getIntent().getExtras();
+//		if (extras != null) {
+//			int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+//			
+//			if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+//				
+//			}
+//		}
+//		
 	}
 	
 	
