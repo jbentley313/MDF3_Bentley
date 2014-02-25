@@ -253,13 +253,8 @@ import android.widget.Toast;
 			Intent widgeIntent = new Intent(getApplicationContext(), BSBWidgetProvider.class);
 			widgeIntent.putExtra("urlVisited", currentUrlString);
 
-			
 			//send broadcast to widget
 			sendBroadcast(widgeIntent);
-
-
-
-
 
 			//set webview to zoomable
 			myWebView.getSettings().setBuiltInZoomControls(true);
