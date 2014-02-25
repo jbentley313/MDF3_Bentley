@@ -1,0 +1,21 @@
+/*Jason Bentley
+MDf3 Project 4
+Test Score Saver*/
+
+
+
+h2 {
+	text-align:center;
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+}
+
+.formClass {
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.buttonClass {
+	margin-left: 35px;
+	margin-right: 35px;
+}
