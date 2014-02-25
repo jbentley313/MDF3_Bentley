@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="android.location.Address"/>
-<fullyQualifiedTypeName name="com.jbentley.urgenthelp.MainActivity.GeocoderTask"/>
-<fullyQualifiedTypeName name="java.lang.Double"/>
-<fullyQualifiedTypeName name="android.view.inputmethod.InputMethodManager"/>
-<fullyQualifiedTypeName name="android.opengl.Visibility"/>
-<fullyQualifiedTypeName name="android.telephony.TelephonyManager"/>
-<fullyQualifiedTypeName name="android.os.Bundle"/>
-<fullyQualifiedTypeName name="android.media.MediaPlayer"/>
-<fullyQualifiedTypeName name="android.media.MediaPlayer.OnPreparedListener"/>
 <fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.raw"/>
 <fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.string"/>
 <fullyQualifiedTypeName name="java.util.Locale"/>
@@ -22,7 +12,6 @@
 <fullyQualifiedTypeName name="android.R.id"/>
 <fullyQualifiedTypeName name="android.location.LocationListener"/>
 <fullyQualifiedTypeName name="android.location.LocationManager"/>
-<fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.view.MenuInflater"/>
 <fullyQualifiedTypeName name="android.view.Menu"/>
 <fullyQualifiedTypeName name="android.app.ActionBar"/>
@@ -41,8 +30,6 @@
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.RemoteViews"/>
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.layout"/>
@@ -53,11 +40,24 @@
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.WidgetConfigActivity"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog.Builder"/>
-<fullyQualifiedTypeName name="android.net.Uri"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.appwidget.AppWidgetManager"/>
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.BSBWidgetProvider"/>
 <fullyQualifiedTypeName name="android.app.PendingIntent"/>
 <fullyQualifiedTypeName name="android.content.SharedPreferences"/>
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
+<fullyQualifiedTypeName name="com.jbentley.testscoresaver.R.layout"/>
+<fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.widget.ProgressBar"/>
+<fullyQualifiedTypeName name="android.webkit.WebView"/>
+<fullyQualifiedTypeName name="com.jbentley.testscoresaver.R.id"/>
+<fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
+<fullyQualifiedTypeName name="android.view.Window"/>
+<fullyQualifiedTypeName name="android.view.WindowManager"/>
+<fullyQualifiedTypeName name="com.jbentley.testscoresaver.ScoresEnterActivity.myWebViewClient"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.net.Uri"/>
 </qualifiedTypeNameHistroy>

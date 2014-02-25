@@ -1,7 +1,10 @@
 package com.jbentley.testscoresaver;
 
+import java.lang.annotation.Annotation;
+
 import com.jbentley.connectivityPackage.connectivityClass;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,12 +15,13 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 public class ScoresEnterActivity extends Activity {
-	private WebView scoresEnterWebview;
+	WebView scoresEnterWebview;
 	Context mContext;
 	ProgressBar progressBar;
 
@@ -27,11 +31,11 @@ public class ScoresEnterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-		
-		//Remove titlebar
-	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-	    setContentView(R.layout.activity_scores_enter);
+		//Remove titlebar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		setContentView(R.layout.activity_scores_enter);
 
 		scoresEnterWebview = (WebView) findViewById(R.id.scoresWebview);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -45,37 +49,62 @@ public class ScoresEnterActivity extends Activity {
 		if(connectionCheck.connectionStatus(mContext))
 		{
 			launchURL();
+			scoresEnterWebview.getSettings().setAllowFileAccess(true);
+			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
 		}
 
 
 	}
 
-//open Url
-	
+	public class JSInterface { Context _context;
+
+	JSInterface(Context context) {
+		_context = mContext;
+	}
+	@JavascriptInterface
+	public void uselessMethod(String lastName, String firstName, int score){
+		String scoreString = String.valueOf(score);
+		Log.i("From webview JS",lastName + ", " + firstName + ", " + scoreString);
+	}
+	}
+
+	//open Url
+
 	private void launchURL() {
-		
+
 		scoresEnterWebview.loadUrl(SCORE_WEB_URL);
-		
+
 	}
-	
+
 	//progress bar
-		private class myWebViewClient extends WebViewClient {
+	private class myWebViewClient extends WebViewClient {
 
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap bitMap) {
-				Log.i("WVC", "onPageStarted");
-
-				super.onPageStarted(view, url, bitMap);
-				findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-			}
-
-			@Override
-			public void onPageFinished(WebView view, String url) {
-
-				findViewById(R.id.progressBar).setVisibility(View.GONE);
-				
-			}
+		//security check for proper URL loading the webview
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			final String LOG_TAG = "GitHubCheck";
+			Log.d(LOG_TAG, "[x] getHost: " + Uri.parse(url).getHost());
+			Log.d(LOG_TAG, "[x] getScheme: " + Uri.parse(url).getScheme());
+			Log.d(LOG_TAG, "[x] getPath: " + Uri.parse(url).getPath());
+			if (Uri.parse(url).getHost().equals("http://jbentley313.github.com/MDF3")){return true;}
+			return false;
 		}
+
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap bitMap) {
+			Log.i("WVC", "onPageStarted");
+
+			super.onPageStarted(view, url, bitMap);
+			findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onPageFinished(WebView view, String url) {
+
+			findViewById(R.id.progressBar).setVisibility(View.GONE);
+
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
