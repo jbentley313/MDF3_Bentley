@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.raw"/>
-<fullyQualifiedTypeName name="com.jbentley.urgenthelp.R.string"/>
-<fullyQualifiedTypeName name="java.util.Locale"/>
 <fullyQualifiedTypeName name="java.security.Provider"/>
 <fullyQualifiedTypeName name="android.location.Location"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="com.jbentley.testscoresaver.ScoresEnterActivity.myWebViewClient"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.net.Uri"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="android.webkit.JavascriptInterface"/>
+<fullyQualifiedTypeName name="com.jbentley.testscoresaver.ScoresEnterActivity.WebAppInterface"/>
 </qualifiedTypeNameHistroy>
