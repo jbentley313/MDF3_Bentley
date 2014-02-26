@@ -1,15 +1,16 @@
 package com.jbentley.testscoresaver;
 
 import java.util.Date;
-
+import java.util.Locale;
 import com.jbentley.connectivityPackage.connectivityClass;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +36,8 @@ public class ScoresEnterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
+		Parse.initialize(this, "eJJztqNPFCWQePrlGvLsMP1yxuic3f50rVPVzow7", "85yJCXNivxmxzAduk0uT0tqXRnRTjVTbGP8MmyWr");
+		
 
 		//Remove titlebar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -58,6 +61,7 @@ public class ScoresEnterActivity extends Activity {
 			launchURL();
 			scoresEnterWebview.getSettings().setAllowFileAccess(true);
 			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
+			
 		}
 
 
@@ -72,19 +76,19 @@ public class ScoresEnterActivity extends Activity {
 	public void collectScore(String lastName, String firstName, String score){
 
 		Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-		String scoresToEmail = (lastName + ", " + firstName + ": " + score);
+		String scoresToEmail = (lastName.toUpperCase(Locale.US) + ", " + firstName.toUpperCase(Locale.US) + ": " + score);
 
 		//use current device time as key
 		Long timeStamp = new Date().getTime();
 		String currentDateTime = Long.toString(timeStamp);
+		ParseObject testObject = new ParseObject("testScores");
+		testObject.put("lastName", lastName);
+		testObject.put("firstName", firstName);
+		testObject.put("score", score);
+		testObject.saveInBackground();
+		
 
-		//get the preferences
-		SharedPreferences prefs = getSharedPreferences("studentScores",0);
-		SharedPreferences.Editor editPrefs = prefs.edit();
-
-		editPrefs.putString(currentDateTime,scoresToEmail);
-
-		editPrefs.commit();
+		
 	}
 	}
 
