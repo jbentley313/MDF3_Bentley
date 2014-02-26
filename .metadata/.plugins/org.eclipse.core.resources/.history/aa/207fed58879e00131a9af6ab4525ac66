@@ -1,6 +1,6 @@
 package com.jbentley.testscoresaver;
 
-import java.util.Date;
+import java.lang.annotation.Annotation;
 
 import com.jbentley.connectivityPackage.connectivityClass;
 
@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,8 +26,6 @@ public class ScoresEnterActivity extends Activity {
 	Context mContext;
 	ProgressBar progressBar;
 	TextView loadingText;
-
-	String fileName = "testScores";
 
 	private static String SCORE_WEB_URL = "http://jbentley313.github.com/MDF3";
 
@@ -41,12 +39,10 @@ public class ScoresEnterActivity extends Activity {
 
 		setContentView(R.layout.activity_scores_enter);
 
-
-
 		scoresEnterWebview = (WebView) findViewById(R.id.scoresWebview);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		loadingText = (TextView) findViewById(R.id.loadingText);
-
+		
 		scoresEnterWebview.getSettings().setJavaScriptEnabled(true);
 
 		scoresEnterWebview.setWebViewClient(new myWebViewClient());
@@ -71,20 +67,7 @@ public class ScoresEnterActivity extends Activity {
 	@JavascriptInterface
 	public void collectScore(String lastName, String firstName, String score){
 
-		Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-		String scoresToEmail = (lastName + ", " + firstName + ": " + score);
-
-		//use current device time as key
-		Long timeStamp = new Date().getTime();
-		String currentDateTime = Long.toString(timeStamp);
-
-		//get the preferences
-		SharedPreferences prefs = getSharedPreferences("studentScores",0);
-		SharedPreferences.Editor editPrefs = prefs.edit();
-
-		editPrefs.putString(currentDateTime,scoresToEmail);
-
-		editPrefs.commit();
+		Log.i("From webview JS",lastName + ", " + firstName + ", " + score);
 	}
 	}
 

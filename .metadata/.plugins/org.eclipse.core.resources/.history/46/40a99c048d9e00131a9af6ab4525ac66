@@ -26,7 +26,7 @@ public class ScoresEnterActivity extends Activity {
 	Context mContext;
 	ProgressBar progressBar;
 	TextView loadingText;
-
+	
 	String fileName = "testScores";
 
 	private static String SCORE_WEB_URL = "http://jbentley313.github.com/MDF3";
@@ -41,7 +41,7 @@ public class ScoresEnterActivity extends Activity {
 
 		setContentView(R.layout.activity_scores_enter);
 
-
+		
 
 		scoresEnterWebview = (WebView) findViewById(R.id.scoresWebview);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -73,17 +73,16 @@ public class ScoresEnterActivity extends Activity {
 
 		Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
 		String scoresToEmail = (lastName + ", " + firstName + ": " + score);
-
 		//use current device time as key
 		Long timeStamp = new Date().getTime();
 		String currentDateTime = Long.toString(timeStamp);
 
 		//get the preferences
-		SharedPreferences prefs = getSharedPreferences("studentScores",0);
+		SharedPreferences prefs = getSharedPreferences("userContacts",0);
 		SharedPreferences.Editor editPrefs = prefs.edit();
 
 		editPrefs.putString(currentDateTime,scoresToEmail);
-
+		addIcon.setVisible(true);
 		editPrefs.commit();
 	}
 	}
