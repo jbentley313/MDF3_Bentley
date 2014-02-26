@@ -3,17 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ScoresEnterActivity" >
+    tools:context=".ScoresEnterActivity" 
+    android:background="@android:color/background_dark">
 
-    <ProgressBar
+    
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar" 
-        android:layout_gravity="center"/>
+        android:text="@string/loading_" 
+        android:id="@+id/loadingText"
+        android:textSize="30sp"
+        android:gravity="center_vertical|center_horizontal"
+       android:layout_marginTop="200dp"
+        android:background="@android:color/background_dark"/>
+    
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="200dp" />
 
     <WebView
         android:id="@+id/scoresWebview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" 
+        android:background="@android:color/background_dark"
+        />
 
 </LinearLayout>

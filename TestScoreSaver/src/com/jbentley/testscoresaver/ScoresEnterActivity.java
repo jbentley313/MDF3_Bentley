@@ -19,11 +19,13 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class ScoresEnterActivity extends Activity {
 	WebView scoresEnterWebview;
 	Context mContext;
 	ProgressBar progressBar;
+	TextView loadingText;
 
 	private static String SCORE_WEB_URL = "http://jbentley313.github.com/MDF3";
 
@@ -39,7 +41,8 @@ public class ScoresEnterActivity extends Activity {
 
 		scoresEnterWebview = (WebView) findViewById(R.id.scoresWebview);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+		loadingText = (TextView) findViewById(R.id.loadingText);
+		
 		scoresEnterWebview.getSettings().setJavaScriptEnabled(true);
 
 		scoresEnterWebview.setWebViewClient(new myWebViewClient());
@@ -62,9 +65,9 @@ public class ScoresEnterActivity extends Activity {
 		_context = mContext;
 	}
 	@JavascriptInterface
-	public void uselessMethod(String lastName, String firstName, int score){
-		String scoreString = String.valueOf(score);
-		Log.i("From webview JS",lastName + ", " + firstName + ", " + scoreString);
+	public void collectScore(String lastName, String firstName, String score){
+
+		Log.i("From webview JS",lastName + ", " + firstName + ", " + score);
 	}
 	}
 
@@ -86,7 +89,7 @@ public class ScoresEnterActivity extends Activity {
 			Log.d(LOG_TAG, "[x] getHost: " + Uri.parse(url).getHost());
 			Log.d(LOG_TAG, "[x] getScheme: " + Uri.parse(url).getScheme());
 			Log.d(LOG_TAG, "[x] getPath: " + Uri.parse(url).getPath());
-			if (Uri.parse(url).getHost().equals("http://jbentley313.github.com/MDF3")){return true;}
+			if (Uri.parse(url).getHost().equals(SCORE_WEB_URL)){return true;}
 			return false;
 		}
 
@@ -101,7 +104,8 @@ public class ScoresEnterActivity extends Activity {
 		@Override
 		public void onPageFinished(WebView view, String url) {
 
-			findViewById(R.id.progressBar).setVisibility(View.GONE);
+			progressBar.setVisibility(View.GONE);
+			loadingText.setVisibility(View.GONE);
 
 		}
 	}
