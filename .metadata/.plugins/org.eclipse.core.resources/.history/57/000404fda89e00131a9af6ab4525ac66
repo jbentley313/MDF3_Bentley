@@ -90,8 +90,6 @@ public class ScoresEnterActivity extends Activity {
 		
 				
 	}
-	
-	//scores footer handler
 	@JavascriptInterface
 	public void displayScores() {
 		Log.i("Clicked", "displayScores!");

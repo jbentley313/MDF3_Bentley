@@ -90,13 +90,11 @@ public class ScoresEnterActivity extends Activity {
 		
 				
 	}
-	
-	//scores footer handler
 	@JavascriptInterface
 	public void displayScores() {
 		Log.i("Clicked", "displayScores!");
-		Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
-		startActivity(scoresIntent);
+		Intent scoresIntent = new Intent(this, DisplayScores.class);
+		
 	}
 	}
 
