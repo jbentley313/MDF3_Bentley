@@ -1,7 +1,5 @@
 package com.jbentley.testscoresaver;
 
-import java.util.Date;
-import java.util.Locale;
 import com.jbentley.connectivityPackage.connectivityClass;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -38,7 +36,7 @@ public class ScoresEnterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 		Parse.initialize(this, "eJJztqNPFCWQePrlGvLsMP1yxuic3f50rVPVzow7", "85yJCXNivxmxzAduk0uT0tqXRnRTjVTbGP8MmyWr");
-		
+
 
 		//Remove titlebar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -62,7 +60,7 @@ public class ScoresEnterActivity extends Activity {
 			launchURL();
 			scoresEnterWebview.getSettings().setAllowFileAccess(true);
 			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
-			
+
 		}
 
 
@@ -73,24 +71,22 @@ public class ScoresEnterActivity extends Activity {
 	JSInterface(Context context) {
 		_context = mContext;
 	}
+
+
 	@JavascriptInterface
 	public void collectScore(String lastName, String firstName, String score){
 
 		Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-//		String scoresToEmail = (lastName.toUpperCase(Locale.US) + ", " + firstName.toUpperCase(Locale.US) + ": " + score);
 
-		//use current device time as key
-//		Long timeStamp = new Date().getTime();
-//		String currentDateTime = Long.toString(timeStamp);
 		ParseObject testObject = new ParseObject("testScores");
 		testObject.put("lastName", lastName);
 		testObject.put("firstName", firstName);
 		testObject.put("score", score);
 		testObject.saveInBackground();
-		
-				
+
+
 	}
-	
+
 	//scores footer handler
 	@JavascriptInterface
 	public void displayScores() {
@@ -101,7 +97,6 @@ public class ScoresEnterActivity extends Activity {
 	}
 
 	//open Url
-
 	private void launchURL() {
 
 		scoresEnterWebview.loadUrl(SCORE_WEB_URL);

@@ -1,0 +1,93 @@
+package com.jbentley.testscoresaver;
+
+import java.util.List;
+
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.util.Log;
+import android.view.Menu;
+import android.widget.ListView;
+
+public class DisplayScores extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_display_scores);
+		
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query.findInBackground(new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> quizScoreList, ParseException e) {
+				// TODO Auto-generated method stub
+				if (e == null) {
+					Log.d("score", "Retrieved "
+							+ quizScoreList.size()
+							+ " scores");
+
+					for (ParseObject scoreInfo : quizScoreList) {
+						final String firstname = scoreInfo
+								.getString("firstname");
+						String lastname = scoreInfo
+								.getString("lastname");
+						String score = Integer
+								.toString(scoreInfo
+										.getInt("score"));
+						TextView finalTextView = (TextView) findViewById(R.id.scoresTextView);
+						finalTextView.setText(lastname
+								+ ", " + firstname
+								+ "     " + score + "\n"
+								+ finalTextView.getText());
+
+					}
+
+				} else {
+					Log.d("score",
+							"Error: " + e.getMessage());
+				}
+			}
+			
+		});
+		
+		  
+	
+		
+		
+		ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(this, "testScores");
+		
+		
+		
+		
+		  adapter.setTextKey("firstName");
+		  
+		  
+		 
+		  ListView listView = (ListView) findViewById(R.id.listview);
+		  listView.setAdapter(adapter);
+		
+		
+	}
+
+	
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.display_scores, menu);
+		return true;
+	}
+	
+	
+
+}

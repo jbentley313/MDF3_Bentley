@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name="com.jbentley.testscoresaver.DisplayScores"
-            android:label="@string/title_activity_display_scores" >
+            android:maxLines = "3000"
+            android:label="Test Scores" >
         </activity>
     </application>
 
