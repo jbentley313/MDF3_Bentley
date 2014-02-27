@@ -17,7 +17,6 @@
 package com.jbentley.testscoresaver;
 
 import java.util.List;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -27,7 +26,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,7 +72,9 @@ public class DisplayScores extends Activity {
 						String lastname = scoreInfo
 								.getString("lastName");
 						String score = scoreInfo.getString("score");
-
+						
+						
+						
 						scoresTextView.setText(lastname
 								+ ", " + firstname
 								+ ": " + score + "\n"
@@ -89,11 +89,14 @@ public class DisplayScores extends Activity {
 			}
 
 		});
+		
+		
 
-		//allow textview to be scrollable
-		scoresTextView.setMovementMethod(new ScrollingMovementMethod());
+		
+		
 
 	}
+	
 
 	//action bar
 	@Override

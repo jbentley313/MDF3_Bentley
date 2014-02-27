@@ -16,7 +16,9 @@ package com.jbentley.testscoresaver;
 
 import com.jbentley.connectivityPackage.connectivityClass;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
@@ -80,7 +81,8 @@ public class ScoresEnterActivity extends Activity {
 			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
 
 		} else {
-			displayAlert("No network connection detected");
+
+			displayAlert("Whoops","No network connection detected");
 
 		}
 
@@ -100,9 +102,10 @@ public class ScoresEnterActivity extends Activity {
 		@JavascriptInterface
 		public void collectScore(String lastName, String firstName, String score){
 			Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
+			
 			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
-				displayAlert("All fields are required");
-			} else {
+				displayAlert("Whoops!","All fields are required");
+			}  else {
 				if (connectionCheck.connectionStatus(mContext))
 				{
 					Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
@@ -111,10 +114,23 @@ public class ScoresEnterActivity extends Activity {
 					testObject.put("lastName", lastName);
 					testObject.put("firstName", firstName);
 					testObject.put("score", score);
-					testObject.saveInBackground();
+					testObject.saveInBackground(new SaveCallback() {
+
+						//save callback
+						@Override
+						public void done(ParseException e) {
+							// TODO Auto-generated method stub
+							if (e == null) {
+								displayAlert("Success!","Score saved!");
+							} else {
+								displayAlert("Save Error","Something went wrong.  Score Not Saved");
+							}
+						}
+					}
+							);
 
 				} else {
-					displayAlert("No network connection detected");
+					displayAlert("Whoops!","No network connection detected");
 				}
 			}
 		}
@@ -130,11 +146,11 @@ public class ScoresEnterActivity extends Activity {
 				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
 				startActivity(scoresIntent);
 			} else {
-				displayAlert("No network connection detected");
+				displayAlert("Whoops!","No network connection detected");
 			}
 
 		}
-		
+
 	}
 
 	//open Url
@@ -176,10 +192,10 @@ public class ScoresEnterActivity extends Activity {
 	}
 
 	//display Alert method
-	private void displayAlert(String msg) {
+	private void displayAlert( String title, String msg) {
 		new AlertDialog.Builder(this)
 
-		.setTitle("Whoops!")
+		.setTitle(title)
 		.setMessage(msg)
 		.setPositiveButton("Ok", null)
 		.setCancelable(true)

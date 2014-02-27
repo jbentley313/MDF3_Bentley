@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33BEFF"
+    android:orientation="vertical"
+    tools:context=".DisplayScores" >
+
+    <TextView
+        android:id="@+id/scoresTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:textSize="25sp"
+        android:textStyle="bold" >
+    </TextView>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:id="@+id/listview">
+    </ListView>
+
+</LinearLayout>

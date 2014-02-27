@@ -16,7 +16,8 @@
         android:textSize="30sp"
         android:gravity="center_vertical|center_horizontal"
        android:layout_marginTop="200dp"
-        android:background="@android:color/background_dark"/>
+        android:background="@android:color/background_dark"
+        android:textColor="@android:color/white"/>
     
     <ProgressBar
         android:id="@+id/progressBar"

@@ -1,0 +1,206 @@
+/*
+ *Author: Jason Bentley
+ * 
+ *  Feb 27, 2014
+ * 
+ * Project = TestScoreSaver
+ * 
+ * Package = com.jbentley.testscoresaver
+ * 
+ * ScoresEnterActivity allows a user to enter first and last name, as well as a score
+ * that is saved to Parse.com.  
+ * 
+ * 
+ */
+package com.jbentley.testscoresaver;
+
+import com.jbentley.connectivityPackage.connectivityClass;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+public class ScoresEnterActivity extends Activity {
+	WebView scoresEnterWebview;
+	Context mContext;
+	ProgressBar progressBar;
+	TextView loadingText;
+	connectivityClass connectionCheck;
+
+	String fileName = "testScores";
+
+	private static String SCORE_WEB_URL = "http://jbentley313.github.com/MDF3";
+
+	@SuppressLint("SetJavaScriptEnabled") @Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mContext = this;
+
+		//Initialize parse with keys
+		Parse.initialize(this, "eJJztqNPFCWQePrlGvLsMP1yxuic3f50rVPVzow7", "85yJCXNivxmxzAduk0uT0tqXRnRTjVTbGP8MmyWr");
+
+
+		//Remove titlebar
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		setContentView(R.layout.activity_scores_enter);
+
+
+		//instantiate views
+		scoresEnterWebview = (WebView) findViewById(R.id.scoresWebview);
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		loadingText = (TextView) findViewById(R.id.loadingText);
+
+		scoresEnterWebview.getSettings().setJavaScriptEnabled(true);
+
+		scoresEnterWebview.setWebViewClient(new myWebViewClient());
+
+		//check network connection and launch URL
+		connectionCheck = new connectivityClass();
+		if(connectionCheck.connectionStatus(mContext))
+		{
+			launchURL();
+			scoresEnterWebview.getSettings().setAllowFileAccess(true);
+			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
+
+		} else {
+
+			displayAlert("Whoops","No network connection detected");
+
+		}
+
+
+	}
+
+	//JavaScript interface
+	public class JSInterface { 
+
+		Context _context;
+
+		JSInterface(Context context) {
+			_context = mContext;
+		}
+
+		//collect strings from fields
+		@JavascriptInterface
+		public void collectScore(String lastName, String firstName, String score){
+			Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
+			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
+				displayAlert("Whoops!","All fields are required");
+			} else if () {
+
+			} else {
+				if (connectionCheck.connectionStatus(mContext))
+				{
+					Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
+
+					ParseObject testObject = new ParseObject("testScores");
+					testObject.put("lastName", lastName);
+					testObject.put("firstName", firstName);
+					testObject.put("score", score);
+					testObject.saveInBackground(new SaveCallback() {
+
+						//save callback
+						@Override
+						public void done(ParseException e) {
+							// TODO Auto-generated method stub
+							if (e == null) {
+								displayAlert("Success!","Score saved!");
+							} else {
+								displayAlert("Save Error","Something went wrong.  Score Not Saved");
+							}
+						}
+					}
+							);
+
+				} else {
+					displayAlert("Whoops!","No network connection detected");
+				}
+			}
+		}
+
+		//scores footer handler
+		@JavascriptInterface
+		public void displayScores() {
+			Log.i("Clicked", "displayScores!");
+
+			if(connectionCheck.connectionStatus(mContext))
+			{
+				//display scores intent
+				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
+				startActivity(scoresIntent);
+			} else {
+				displayAlert("Whoops!","No network connection detected");
+			}
+
+		}
+
+	}
+
+	//open Url
+	private void launchURL() {
+
+		scoresEnterWebview.loadUrl(SCORE_WEB_URL);
+
+	}
+
+	//web client and progress bar
+	private class myWebViewClient extends WebViewClient {
+
+		//security check for proper URL loading the webview
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			final String LOG_TAG = "GitHubCheck";
+			Log.d(LOG_TAG, "[x] getHost: " + Uri.parse(url).getHost());
+			Log.d(LOG_TAG, "[x] getScheme: " + Uri.parse(url).getScheme());
+			Log.d(LOG_TAG, "[x] getPath: " + Uri.parse(url).getPath());
+			if (Uri.parse(url).getHost().equals(SCORE_WEB_URL)){return true;}
+			return false;
+		}
+
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap bitMap) {
+			Log.i("WVC", "onPageStarted");
+
+			super.onPageStarted(view, url, bitMap);
+			findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onPageFinished(WebView view, String url) {
+
+			progressBar.setVisibility(View.GONE);
+			loadingText.setVisibility(View.GONE);
+
+		}
+	}
+
+	//display Alert method
+	private void displayAlert( String title, String msg) {
+		new AlertDialog.Builder(this)
+
+		.setTitle(title)
+		.setMessage(msg)
+		.setPositiveButton("Ok", null)
+		.setCancelable(true)
+		.show();
+	}
+
+}

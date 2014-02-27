@@ -19,7 +19,7 @@
         <activity
             android:name="com.jbentley.testscoresaver.ScoresEnterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/app_name" >
+            android:label="Test Score Saver" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
