@@ -135,6 +135,9 @@ public class DisplayScores extends Activity {
 				Toast.makeText(mContext, "No email clients installed.", Toast.LENGTH_LONG).show();
 			}
 		}
+
 		return super.onOptionsItemSelected(item);
+
+
 	}
 }

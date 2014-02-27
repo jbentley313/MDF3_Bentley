@@ -45,6 +45,7 @@ public class DisplayScores extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_scores);
 
+
 		//action bar icon home button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(true);
@@ -95,6 +96,8 @@ public class DisplayScores extends Activity {
 
 	}
 
+
+
 	//action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,16 +128,25 @@ public class DisplayScores extends Activity {
 
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("message/rfc822");
+
+			//email intents
+			//			i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
 			i.putExtra(Intent.EXTRA_SUBJECT, "Test Scores");
 			i.putExtra(Intent.EXTRA_TEXT   , testScores);
-			
 			try {
 				startActivity(Intent.createChooser(i, "Send scores..."));
-				
 			} catch (android.content.ActivityNotFoundException ex) {
 				Toast.makeText(mContext, "No email clients installed.", Toast.LENGTH_LONG).show();
 			}
 		}
+
+
+
+
+
+
 		return super.onOptionsItemSelected(item);
+
+
 	}
 }

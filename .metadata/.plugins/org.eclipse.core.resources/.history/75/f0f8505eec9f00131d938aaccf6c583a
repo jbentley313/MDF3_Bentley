@@ -126,7 +126,6 @@ public class ScoresEnterActivity extends Activity {
 
 			if(connectionCheck.connectionStatus(mContext))
 			{
-				//display scores intent
 				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
 				startActivity(scoresIntent);
 			} else {
@@ -134,7 +133,10 @@ public class ScoresEnterActivity extends Activity {
 			}
 
 		}
-		
+
+
+
+
 	}
 
 	//open Url
@@ -175,15 +177,16 @@ public class ScoresEnterActivity extends Activity {
 		}
 	}
 
-	//display Alert method
 	private void displayAlert(String msg) {
 		new AlertDialog.Builder(this)
 
 		.setTitle("Whoops!")
 		.setMessage(msg)
 		.setPositiveButton("Ok", null)
+
 		.setCancelable(true)
 		.show();
 	}
+
 
 }

@@ -1,19 +1,3 @@
-/*
- *Author: Jason Bentley
- * 
- * Feb 27, 2014
- * 
- * Project = TestScoreSaver
- * 
- * Package = com.jbentley.testscoresaver
- * 
- * 
- * DisplayScores is an activity that responds as a JavascriptInterface from a WebView
- * It gets scores from Parse.com and displays in a textview.
- * The data can then be emailed using an Intent.
- * 
- * 
- */
 package com.jbentley.testscoresaver;
 
 import java.util.List;
@@ -45,6 +29,7 @@ public class DisplayScores extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_scores);
 
+
 		//action bar icon home button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(true);
@@ -52,12 +37,10 @@ public class DisplayScores extends Activity {
 
 		scoresTextView = (TextView) findViewById(R.id.scoresTextView);
 
-		//Parse query
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("testScores");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		query.findInBackground(new FindCallback<ParseObject>() {
 
-			//after download, display scores and names
 			@Override
 			public void done(List<ParseObject> quizScoreList, ParseException e) {
 				// TODO Auto-generated method stub
@@ -67,7 +50,6 @@ public class DisplayScores extends Activity {
 							+ quizScoreList.size()
 							+ " scores");
 
-					//loop through ParseObject scoreInfo
 					for (ParseObject scoreInfo : quizScoreList) {
 						final String firstname = scoreInfo
 								.getString("firstName");
@@ -90,12 +72,13 @@ public class DisplayScores extends Activity {
 
 		});
 
-		//allow textview to be scrollable
 		scoresTextView.setMovementMethod(new ScrollingMovementMethod());
 
 	}
 
-	//action bar
+
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -106,35 +89,41 @@ public class DisplayScores extends Activity {
 		return true;
 	}
 
-	//action bar menu item selected handler
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
 		
-		//icon (home) acts as a back button
 		case android.R.id.home:
 			Intent intent = new Intent(this, ScoresEnterActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			break;
 
-			//email test scores
 		case R.id.action_add:
 			String testScores = scoresTextView.getText().toString();
 
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.setType("message/rfc822");
+
+			//email intents
+			//			i.putExtra(Intent.EXTRA_EMAIL  , new String[]{allEmailContacts});
 			i.putExtra(Intent.EXTRA_SUBJECT, "Test Scores");
 			i.putExtra(Intent.EXTRA_TEXT   , testScores);
-			
 			try {
 				startActivity(Intent.createChooser(i, "Send scores..."));
-				
 			} catch (android.content.ActivityNotFoundException ex) {
 				Toast.makeText(mContext, "No email clients installed.", Toast.LENGTH_LONG).show();
 			}
 		}
+
+
+
+
+
+
 		return super.onOptionsItemSelected(item);
+
+
 	}
 }

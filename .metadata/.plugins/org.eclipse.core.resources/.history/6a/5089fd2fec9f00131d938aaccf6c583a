@@ -51,7 +51,7 @@ public class ScoresEnterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
-
+		
 		//Initialize parse with keys
 		Parse.initialize(this, "eJJztqNPFCWQePrlGvLsMP1yxuic3f50rVPVzow7", "85yJCXNivxmxzAduk0uT0tqXRnRTjVTbGP8MmyWr");
 
@@ -87,7 +87,6 @@ public class ScoresEnterActivity extends Activity {
 
 	}
 
-	//JavaScript interface
 	public class JSInterface { 
 
 		Context _context;
@@ -96,14 +95,16 @@ public class ScoresEnterActivity extends Activity {
 			_context = mContext;
 		}
 
-		//collect strings from fields
+
 		@JavascriptInterface
 		public void collectScore(String lastName, String firstName, String score){
 			Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
 			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
 				displayAlert("All fields are required");
 			} else {
-				if (connectionCheck.connectionStatus(mContext))
+
+
+				if(connectionCheck.connectionStatus(mContext))
 				{
 					Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
 
@@ -116,7 +117,9 @@ public class ScoresEnterActivity extends Activity {
 				} else {
 					displayAlert("No network connection detected");
 				}
+
 			}
+
 		}
 
 		//scores footer handler
@@ -126,7 +129,6 @@ public class ScoresEnterActivity extends Activity {
 
 			if(connectionCheck.connectionStatus(mContext))
 			{
-				//display scores intent
 				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
 				startActivity(scoresIntent);
 			} else {
@@ -134,7 +136,10 @@ public class ScoresEnterActivity extends Activity {
 			}
 
 		}
-		
+
+
+
+
 	}
 
 	//open Url
@@ -175,15 +180,16 @@ public class ScoresEnterActivity extends Activity {
 		}
 	}
 
-	//display Alert method
 	private void displayAlert(String msg) {
 		new AlertDialog.Builder(this)
 
 		.setTitle("Whoops!")
 		.setMessage(msg)
 		.setPositiveButton("Ok", null)
+
 		.setCancelable(true)
 		.show();
 	}
+
 
 }
