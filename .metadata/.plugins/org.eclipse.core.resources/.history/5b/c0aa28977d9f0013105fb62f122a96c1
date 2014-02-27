@@ -65,7 +65,7 @@ public class ScoresEnterActivity extends Activity {
 
 		} else {
 			displayAlert("No network connection detected");
-
+			
 		}
 
 
@@ -110,7 +110,7 @@ public class ScoresEnterActivity extends Activity {
 		@JavascriptInterface
 		public void displayScores() {
 			Log.i("Clicked", "displayScores!");
-
+			
 			if(connectionCheck.connectionStatus(mContext))
 			{
 				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
@@ -118,7 +118,7 @@ public class ScoresEnterActivity extends Activity {
 			} else {
 				displayAlert("No network connection detected");
 			}
-
+			
 		}
 
 

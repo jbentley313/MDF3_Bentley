@@ -27,7 +27,6 @@ public class ScoresEnterActivity extends Activity {
 	Context mContext;
 	ProgressBar progressBar;
 	TextView loadingText;
-	connectivityClass connectionCheck;
 
 	String fileName = "testScores";
 
@@ -56,15 +55,12 @@ public class ScoresEnterActivity extends Activity {
 		scoresEnterWebview.setWebViewClient(new myWebViewClient());
 
 
-		connectionCheck = new connectivityClass();
+		connectivityClass connectionCheck = new connectivityClass();
 		if(connectionCheck.connectionStatus(mContext))
 		{
 			launchURL();
 			scoresEnterWebview.getSettings().setAllowFileAccess(true);
 			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
-
-		} else {
-			displayAlert("No network connection detected");
 
 		}
 
@@ -87,21 +83,13 @@ public class ScoresEnterActivity extends Activity {
 				displayAlert("All fields are required");
 			} else {
 
+				Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
 
-				if(connectionCheck.connectionStatus(mContext))
-				{
-					Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-
-					ParseObject testObject = new ParseObject("testScores");
-					testObject.put("lastName", lastName);
-					testObject.put("firstName", firstName);
-					testObject.put("score", score);
-					testObject.saveInBackground();
-
-				} else {
-					displayAlert("No network connection detected");
-				}
-
+				ParseObject testObject = new ParseObject("testScores");
+				testObject.put("lastName", lastName);
+				testObject.put("firstName", firstName);
+				testObject.put("score", score);
+				testObject.saveInBackground();
 			}
 
 		}
@@ -110,19 +98,12 @@ public class ScoresEnterActivity extends Activity {
 		@JavascriptInterface
 		public void displayScores() {
 			Log.i("Clicked", "displayScores!");
-
-			if(connectionCheck.connectionStatus(mContext))
-			{
-				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
-				startActivity(scoresIntent);
-			} else {
-				displayAlert("No network connection detected");
-			}
-
+			Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
+			startActivity(scoresIntent);
 		}
 
 
-
+		
 
 	}
 

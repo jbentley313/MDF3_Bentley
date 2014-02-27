@@ -63,9 +63,6 @@ public class ScoresEnterActivity extends Activity {
 			scoresEnterWebview.getSettings().setAllowFileAccess(true);
 			scoresEnterWebview.addJavascriptInterface(new JSInterface(this), "Native");
 
-		} else {
-			displayAlert("No network connection detected");
-
 		}
 
 
@@ -98,8 +95,6 @@ public class ScoresEnterActivity extends Activity {
 					testObject.put("score", score);
 					testObject.saveInBackground();
 
-				} else {
-					displayAlert("No network connection detected");
 				}
 
 			}
@@ -110,15 +105,8 @@ public class ScoresEnterActivity extends Activity {
 		@JavascriptInterface
 		public void displayScores() {
 			Log.i("Clicked", "displayScores!");
-
-			if(connectionCheck.connectionStatus(mContext))
-			{
-				Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
-				startActivity(scoresIntent);
-			} else {
-				displayAlert("No network connection detected");
-			}
-
+			Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
+			startActivity(scoresIntent);
 		}
 
 
