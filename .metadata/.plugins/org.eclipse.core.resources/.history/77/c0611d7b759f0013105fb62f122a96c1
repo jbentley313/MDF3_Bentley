@@ -68,42 +68,46 @@ public class ScoresEnterActivity extends Activity {
 	}
 
 	public class JSInterface { 
-
+		
 		Context _context;
 
-		JSInterface(Context context) {
-			_context = mContext;
+	JSInterface(Context context) {
+		_context = mContext;
+	}
+
+
+	@JavascriptInterface
+	public void collectScore(String lastName, String firstName, String score){
+
+		if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
+			displayAlert("All fields are required");
+		} else {
+
+			Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
+
+			ParseObject testObject = new ParseObject("testScores");
+			testObject.put("lastName", lastName);
+			testObject.put("firstName", firstName);
+			testObject.put("score", score);
+			testObject.saveInBackground();
 		}
 
+	}
 
-		@JavascriptInterface
-		public void collectScore(String lastName, String firstName, String score){
-
-			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
-				displayAlert("All fields are required");
-			} else {
-
-				Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-
-				ParseObject testObject = new ParseObject("testScores");
-				testObject.put("lastName", lastName);
-				testObject.put("firstName", firstName);
-				testObject.put("score", score);
-				testObject.saveInBackground();
-			}
-
-		}
-
-		//scores footer handler
-		@JavascriptInterface
-		public void displayScores() {
-			Log.i("Clicked", "displayScores!");
-			Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
-			startActivity(scoresIntent);
-		}
+	//scores footer handler
+	@JavascriptInterface
+	public void displayScores() {
+		Log.i("Clicked", "displayScores!");
+		Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
+		startActivity(scoresIntent);
+	}
 
 
-		
+	//toast initiated from Webview
+	@JavascriptInterface
+	public void displayToast(String msg) {
+		displayAlert(msg);
+	}
 
 	}
 

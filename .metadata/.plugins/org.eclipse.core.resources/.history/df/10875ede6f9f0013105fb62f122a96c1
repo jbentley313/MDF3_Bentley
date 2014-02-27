@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -67,44 +66,34 @@ public class ScoresEnterActivity extends Activity {
 
 	}
 
-	public class JSInterface { 
+	public class JSInterface { Context _context;
 
-		Context _context;
-
-		JSInterface(Context context) {
-			_context = mContext;
-		}
+	JSInterface(Context context) {
+		_context = mContext;
+	}
 
 
-		@JavascriptInterface
-		public void collectScore(String lastName, String firstName, String score){
+	@JavascriptInterface
+	public void collectScore(String lastName, String firstName, String score){
 
-			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
-				displayAlert("All fields are required");
-			} else {
+		Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
 
-				Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-
-				ParseObject testObject = new ParseObject("testScores");
-				testObject.put("lastName", lastName);
-				testObject.put("firstName", firstName);
-				testObject.put("score", score);
-				testObject.saveInBackground();
-			}
-
-		}
-
-		//scores footer handler
-		@JavascriptInterface
-		public void displayScores() {
-			Log.i("Clicked", "displayScores!");
-			Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
-			startActivity(scoresIntent);
-		}
+		ParseObject testObject = new ParseObject("testScores");
+		testObject.put("lastName", lastName);
+		testObject.put("firstName", firstName);
+		testObject.put("score", score);
+		testObject.saveInBackground();
 
 
-		
+	}
 
+	//scores footer handler
+	@JavascriptInterface
+	public void displayScores() {
+		Log.i("Clicked", "displayScores!");
+		Intent scoresIntent = new Intent(getApplicationContext(), DisplayScores.class);
+		startActivity(scoresIntent);
+	}
 	}
 
 	//open Url
@@ -145,16 +134,11 @@ public class ScoresEnterActivity extends Activity {
 		}
 	}
 
-	private void displayAlert(String msg) {
-		new AlertDialog.Builder(this)
-
-		.setTitle("Whoops!")
-		.setMessage(msg)
-		.setPositiveButton("Ok", null)
-
-		.setCancelable(true)
-		.show();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.scores_enter, menu);
+		return true;
 	}
-
 
 }

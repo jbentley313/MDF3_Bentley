@@ -103,7 +103,11 @@ public class ScoresEnterActivity extends Activity {
 		}
 
 
-		
+		//toast initiated from Webview
+		@JavascriptInterface
+		public void displayToast(String msg) {
+			displayAlert(msg);
+		}
 
 	}
 

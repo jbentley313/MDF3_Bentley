@@ -7,7 +7,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import android.os.Bundle;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,12 +28,6 @@ public class DisplayScores extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_scores);
 
-
-		//action bar icon home button
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowHomeEnabled(true);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
 		scoresTextView = (TextView) findViewById(R.id.scoresTextView);
 
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("testScores");
@@ -45,7 +38,6 @@ public class DisplayScores extends Activity {
 			public void done(List<ParseObject> quizScoreList, ParseException e) {
 				// TODO Auto-generated method stub
 				if (e == null) {
-					
 					Log.d("score", "Retrieved "
 							+ quizScoreList.size()
 							+ " scores");
@@ -93,12 +85,6 @@ public class DisplayScores extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		
-		case android.R.id.home:
-			Intent intent = new Intent(this, ScoresEnterActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
 
 		case R.id.action_add:
 			String testScores = scoresTextView.getText().toString();

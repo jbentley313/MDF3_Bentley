@@ -45,7 +45,6 @@ public class DisplayScores extends Activity {
 			public void done(List<ParseObject> quizScoreList, ParseException e) {
 				// TODO Auto-generated method stub
 				if (e == null) {
-					
 					Log.d("score", "Retrieved "
 							+ quizScoreList.size()
 							+ " scores");

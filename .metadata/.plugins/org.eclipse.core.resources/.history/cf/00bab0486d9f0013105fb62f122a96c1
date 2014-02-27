@@ -2,6 +2,7 @@ package com.jbentley.testscoresaver;
 
 import java.util.List;
 
+import com.jbentley.urgenthelp.MainActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -45,7 +46,6 @@ public class DisplayScores extends Activity {
 			public void done(List<ParseObject> quizScoreList, ParseException e) {
 				// TODO Auto-generated method stub
 				if (e == null) {
-					
 					Log.d("score", "Retrieved "
 							+ quizScoreList.size()
 							+ " scores");
