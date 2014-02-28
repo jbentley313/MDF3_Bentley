@@ -102,7 +102,7 @@ public class ScoresEnterActivity extends Activity {
 		@JavascriptInterface
 		public void collectScore(String lastName, String firstName, String score){
 			Log.i("From webview JS",lastName + ", " + firstName + ": " + score);
-
+			
 			if(lastName.isEmpty() || firstName.isEmpty() || score.isEmpty()) {
 				displayAlert("Whoops!","All fields are required");
 			}  else {

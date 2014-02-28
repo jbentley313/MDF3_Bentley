@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.preference.PreferenceManager"/>
-<fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R"/>
-<fullyQualifiedTypeName name="android.support.v4.widget.SearchViewCompatIcs.MySearchView"/>
-<fullyQualifiedTypeName name="android.sax.StartElementListener"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.RemoteViews"/>
@@ -21,7 +17,6 @@
 <fullyQualifiedTypeName name="com.jbentley.bigSimpleBrowser.R.id"/>
 <fullyQualifiedTypeName name="com.jbentley.testscoresaver.R.layout"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
-<fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.widget.ProgressBar"/>
 <fullyQualifiedTypeName name="android.webkit.WebView"/>
 <fullyQualifiedTypeName name="android.webkit.WebViewClient"/>
@@ -32,7 +27,6 @@
 <fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="com.jbentley.testscoresaver.ScoresEnterActivity.WebAppInterface"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="com.jbentley.testscoresaver.R.id"/>
 <fullyQualifiedTypeName name="com.jbentley.testscoresaver.FileManager"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
@@ -49,8 +43,6 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="com.parse.FindCallback"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
-<fullyQualifiedTypeName name="com.parse.ParseQueryAdapter"/>
-<fullyQualifiedTypeName name="android.widget.ListView"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="com.jbentley.connectivityPackage.connectivityClass"/>
@@ -60,4 +52,12 @@
 <fullyQualifiedTypeName name="com.jbentley.testscoresaver.ScoresEnterActivity"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="android.webkit.JavascriptInterface"/>
+<fullyQualifiedTypeName name="com.parse.SaveCallback"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="android.widget.Adapter"/>
+<fullyQualifiedTypeName name="com.jbentley.testscoresaver.R.id"/>
+<fullyQualifiedTypeName name="com.parse.ParseQueryAdapter"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup"/>
+<fullyQualifiedTypeName name="android.view.View"/>
 </qualifiedTypeNameHistroy>
