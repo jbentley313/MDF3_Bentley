@@ -1,0 +1,203 @@
+package com.jbentley.urgenthelp;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import android.R.string;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class PhoneNumberSetup extends Activity implements OnClickListener{
+
+	private static final int CONTACT_PICKER_RESULT = 101806;
+	private static final String CONTACT_DEFAULTS = "userContactNumber";
+	private static final String DEBUG_TAG = "Phone Number Setup";
+	protected static final String Tag = DEBUG_TAG; 
+	String name;
+	TextView contactNumbers;
+	Button addNumberBtn;
+	String passContactNumber;
+	String passContactName;
+	ArrayAdapter<String> adapter;
+	ListView cList;
+	ArrayList<String> list = new ArrayList<String>();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_phone_number_setup);
+
+		 contactNumbers = (TextView) this.findViewById(R.id.contact_numbers);
+		 addNumberBtn = (Button) this.findViewById(R.id.addNumberBtn);
+		 
+		 addNumberBtn.setOnClickListener(this);
+		 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
+		 cList = (ListView) findViewById(R.id.cList);
+		//get preferences
+			SharedPreferences prefs = getSharedPreferences(CONTACT_DEFAULTS,0);
+
+			Map<String,?> prefString = prefs.getAll();
+
+			for(Map.Entry<String,?> entry : prefString.entrySet()){
+				Log.d("contacts",entry.getKey() + ": " + 
+						entry.getValue().toString());   
+				String name =  entry.getValue().toString();
+				String number = entry.getKey().toString();
+				
+				
+				String formattedNumber = PhoneNumberUtils.formatNumber(number.replace("+1", "")
+						.replace("-", " ")
+						.replace("(", "")
+						.replace(")", "")
+						);
+				
+				Log.d("[X]" +DEBUG_TAG, formattedNumber);
+
+				//add email to listview adapter
+				adapter.add(name + ":  " + formattedNumber);
+				cList.setAdapter(adapter);
+
+			}
+
+			//hide delete instructions if no emails are present in the adapter
+//			if(adapter.isEmpty()) {
+//				clickToDeleteTextV.setVisibility(View.GONE);
+//			}
+		 
+		
+	}
+
+
+	//launch contact picker
+	private void launchContactPicker() {
+		Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
+		startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
+
+
+	}
+
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case CONTACT_PICKER_RESULT:
+				Cursor cursor = null;
+				String contactNumberString = "";
+				String contactNameString ="";
+				try {
+					Uri result = data.getData();
+					Log.v(DEBUG_TAG, "Got a contact result: "
+							+ result.toString());
+
+					// get the contact id from the Uri
+					String id = result.getLastPathSegment();
+
+					// query for everything name number
+					cursor = getContentResolver().query(Phone.CONTENT_URI,
+							null, Phone.CONTACT_ID + "=?", new String[] { id },
+							null);
+
+					int contactNumber = cursor.getColumnIndex(Phone.DATA);
+					int contactName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+
+					// get name and number
+					if (cursor.moveToFirst()) {
+						passContactNumber = cursor.getString(contactNumber);
+						 passContactName = cursor.getString(contactName);
+						Log.v(DEBUG_TAG, "Got name and number: " + passContactName + ", " + passContactNumber );
+					} else {
+						Log.w(DEBUG_TAG, "No results");
+					}
+				} catch (Exception e) {
+					Log.e(DEBUG_TAG, "Failed to get contact data", e);
+				} finally {
+					if (cursor != null) {
+						cursor.close();
+					}
+
+					
+					if (passContactNumber.length() == 0) {
+						Toast.makeText(this, "No number found for contact.",
+								Toast.LENGTH_LONG).show();
+					}
+
+					//confirm delete
+					new AlertDialog.Builder(this)
+
+					.setTitle("Save this Contact?")
+					.setMessage(passContactName + ": " + passContactNumber)
+					.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//get the preferences
+							Log.i(Tag, "Save in dialog");
+							SharedPreferences prefs = getSharedPreferences("userContactNumber",0);
+							SharedPreferences.Editor editPrefs = prefs.edit();
+							
+							editPrefs.putString(passContactNumber, passContactName);
+							editPrefs.commit();
+							
+							//finish and restart activity
+							finish();
+							startActivity(getIntent());
+					
+						}
+					})
+					.setNegativeButton("No", null)
+					.show();
+			
+		
+				}
+
+				break;
+			}
+
+		} else {
+			Log.w(DEBUG_TAG, "Warning: activity result not ok");
+		}
+
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.phone_number_setup, menu);
+		return true;
+	}
+
+
+	//add number btn
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		launchContactPicker();
+		
+		
+	}
+}

@@ -1,5 +1,6 @@
 package com.jbentley.urgenthelp;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import android.R.string;
@@ -15,18 +16,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class PhoneNumberSetup extends Activity implements OnClickListener{
 
 	private static final int CONTACT_PICKER_RESULT = 101806;
+	private static final String CONTACT_DEFAULTS = "userContactNumber";
 	private static final String DEBUG_TAG = "Phone Number Setup";
 	protected static final String Tag = DEBUG_TAG; 
 	String name;
@@ -34,6 +39,9 @@ public class PhoneNumberSetup extends Activity implements OnClickListener{
 	Button addNumberBtn;
 	String passContactNumber;
 	String passContactName;
+	ArrayAdapter<String> adapter;
+	ListView cList;
+	ArrayList<String> list = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +52,43 @@ public class PhoneNumberSetup extends Activity implements OnClickListener{
 		 addNumberBtn = (Button) this.findViewById(R.id.addNumberBtn);
 		 
 		 addNumberBtn.setOnClickListener(this);
+		 adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list);
+		 cList = (ListView) findViewById(R.id.cList);
+		//get preferences
+			SharedPreferences prefs = getSharedPreferences(CONTACT_DEFAULTS,0);
+
+			Map<String,?> prefString = prefs.getAll();
+
+			for(Map.Entry<String,?> entry : prefString.entrySet()){
+				Log.d("contacts",entry.getKey() + ": " + 
+						entry.getValue().toString());   
+				String name =  entry.getValue().toString();
+				String number = entry.getKey().toString();
+				
+				
+				String formattedNumber1 = PhoneNumberUtils.formatNumber(number.replace("+1", "")
+						.replace("(", "")
+						.replace(")", "")
+						);
+				
+				String formattedNumber = PhoneNumberUtils.formatNumber(formattedNumber1)
+						.replaceAll("-", " ")
+						.replaceAll(" ", "-");
+				
+				Log.d("[X]" +DEBUG_TAG, formattedNumber);
+
+				//add email to listview adapter
+				adapter.add(name + ":  " + formattedNumber);
+				cList.setAdapter(adapter);
+
+			}
+
+			//hide delete instructions if no emails are present in the adapter
+//			if(adapter.isEmpty()) {
+//				clickToDeleteTextV.setVisibility(View.GONE);
+//			}
 		 
-		launchContactPicker();
+		
 	}
 
 
@@ -100,7 +143,7 @@ public class PhoneNumberSetup extends Activity implements OnClickListener{
 					}
 
 					
-					if (contactNumberString.length() == 0) {
+					if (passContactNumber.length() == 0) {
 						Toast.makeText(this, "No number found for contact.",
 								Toast.LENGTH_LONG).show();
 					}
@@ -121,6 +164,10 @@ public class PhoneNumberSetup extends Activity implements OnClickListener{
 							
 							editPrefs.putString(passContactNumber, passContactName);
 							editPrefs.commit();
+							
+							//finish and restart activity
+							finish();
+							startActivity(getIntent());
 					
 						}
 					})
@@ -152,6 +199,7 @@ public class PhoneNumberSetup extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		launchContactPicker();
 		
 		
 	}
