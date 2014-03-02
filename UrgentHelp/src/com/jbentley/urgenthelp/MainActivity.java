@@ -154,7 +154,7 @@ public class MainActivity extends Activity implements OnClickListener, LocationL
 			Log.i(Tag, "Setup Button Clicked");
 
 			//contact activity intent
-			Intent contactIntent = new Intent(this, ContactSetup.class);
+			Intent contactIntent = new Intent(this, Contact_Landing_Activity.class);
 			startActivity(contactIntent);
 
 		}

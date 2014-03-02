@@ -19,5 +19,7 @@
     <string name="tap_an_address_to_delete">Tap an address to delete</string>
     <string name="back">back</string>
     <string name="about_the_author">About the Author</string>
+    <string name="title_activity_contact__landing_">Contact_Landing_Activity</string>
+    <string name="title_activity_phone_number_setup">PhoneNumberSetup</string>
 
 </resources>

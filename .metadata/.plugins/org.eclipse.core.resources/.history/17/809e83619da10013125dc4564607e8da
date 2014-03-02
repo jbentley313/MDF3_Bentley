@@ -1,0 +1,107 @@
+package com.jbentley.urgenthelp;
+
+import android.R.string;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts;
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.util.Log;
+import android.view.Menu;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class PhoneNumberSetup extends Activity {
+
+	private static final int CONTACT_PICKER_RESULT = 101806;
+	private static final String DEBUG_TAG = "Phone Number Setup"; 
+	String name;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_phone_number_setup);
+
+		launchContactPicker();
+	}
+
+
+	//launch contact picker
+	private void launchContactPicker() {
+		Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
+		startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
+
+
+	}
+
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if (resultCode == RESULT_OK) {
+	        switch (requestCode) {
+	        case CONTACT_PICKER_RESULT:
+	            Cursor cursor = null;
+	            String contactNumberString = "";
+	            try {
+	                Uri result = data.getData();
+	                Log.v(DEBUG_TAG, "Got a contact result: "
+	                        + result.toString());
+
+	                // get the contact id from the Uri
+	                String id = result.getLastPathSegment();
+
+	                // query for everything email
+	                cursor = getContentResolver().query(Phone.CONTENT_URI,
+	                        null, Phone.CONTACT_ID + "=?", new String[] { id },
+	                        null);
+
+	                int contactNumber = cursor.getColumnIndex(Phone.DATA);
+	                int contactName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+
+	                // let's just get the first email
+	                if (cursor.moveToFirst()) {
+	                    contactNumberString = cursor.getString(contactNumber);
+	                    String contactNameString = cursor.getString(contactName);
+	                    Log.v(DEBUG_TAG, "Got name and number: " + contactNameString + ", " + contactNumberString );
+	                } else {
+	                    Log.w(DEBUG_TAG, "No results");
+	                }
+	            } catch (Exception e) {
+	                Log.e(DEBUG_TAG, "Failed to get email data", e);
+	            } finally {
+	                if (cursor != null) {
+	                    cursor.close();
+	                }
+	                EditText emailEntry = (EditText) findViewById(R.id.contact_email);
+	                emailEntry.setText(contactNumberString);
+	                if (contactNumberString.length() == 0) {
+	                    Toast.makeText(this, "No email found for contact.",
+	                            Toast.LENGTH_LONG).show();
+	                }
+
+	            }
+
+	            break;
+	        }
+
+	    } else {
+	        Log.w(DEBUG_TAG, "Warning: activity result not ok");
+	    }
+
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.phone_number_setup, menu);
+		return true;
+	}
+
+}

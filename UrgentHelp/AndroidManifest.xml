@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
@@ -33,6 +34,14 @@
         <activity
             android:name="com.jbentley.urgenthelp.ContactSetup"
             android:label="@string/title_activity_contact_setup" >
+        </activity>
+        <activity
+            android:name="com.jbentley.urgenthelp.Contact_Landing_Activity"
+            android:label="@string/title_activity_contact__landing_" >
+        </activity>
+        <activity
+            android:name="com.jbentley.urgenthelp.PhoneNumberSetup"
+            android:label="@string/title_activity_phone_number_setup" >
         </activity>
     </application>
 
